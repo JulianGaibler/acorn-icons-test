@@ -9609,14 +9609,15 @@ async function formatFile(type, content) {
   if (!["svg", "xml"].includes(type)) {
     throw new Error(`Invalid type to format: ${type}`);
   }
-  const plugins = type === "svg" ? [] : [plugin_default];
   const formatted = await import_prettier.default.format(content, {
-    parser: type === "svg" ? "html" : "xml",
-    plugins,
-    // use 4 spaces for indentation
+    parser: "xml",
+    plugins: [plugin_default],
     tabWidth: 4,
     printWidth: type === "svg" ? 1e5 : 80,
-    singleAttributePerLine: false
+    singleAttributePerLine: false,
+    htmlWhitespaceSensitivity: "ignore",
+    bracketSameLine: true,
+    xmlWhitespaceSensitivity: "ignore"
   });
   return formatted;
 }

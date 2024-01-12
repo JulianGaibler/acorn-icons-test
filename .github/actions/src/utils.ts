@@ -62,15 +62,15 @@ export async function formatFile(type: FormattableFile, content: string) {
     throw new Error(`Invalid type to format: ${type}`)
   }
 
-  const plugins = type === 'svg' ? [] : [prettierXmlPlugin]
-
   const formatted = await prettier.format(content, {
-    parser: type === 'svg' ? 'html' : 'xml',
-    plugins,
-    // use 4 spaces for indentation
+    parser: 'xml',
+    plugins: [prettierXmlPlugin],
     tabWidth: 4,
     printWidth: type === 'svg' ? 100000 : 80,
     singleAttributePerLine: false,
+    htmlWhitespaceSensitivity: 'ignore',
+    bracketSameLine: true,
+    xmlWhitespaceSensitivity: 'ignore',
   })
 
   return formatted
