@@ -65321,6 +65321,9 @@ function getInput(name, required = true) {
   }
   return val.trim();
 }
+function getEnv(name) {
+  return process.env[name] || "";
+}
 async function setupGit() {
   if (!process.env.GITHUB_ACTOR) {
     return;
@@ -65338,10 +65341,12 @@ async function setupGit() {
   (0, import_child_process.execSync)('git config --global user.name "GitHub Action"');
 }
 async function commitChanges(files, message) {
+  var _a;
   await setupGit();
+  const branch = (_a = getEnv("GITHUB_HEAD_REF")) == null ? void 0 : _a.replace("refs/heads/", "");
   (0, import_child_process.execSync)(`git add ${files.join(" ")}`);
   (0, import_child_process.execSync)(`git commit -m "${message}"`);
-  (0, import_child_process.execSync)(`git push origin`);
+  (0, import_child_process.execSync)(`git push origin ${branch}`);
 }
 
 // src/icon-transform/index.ts

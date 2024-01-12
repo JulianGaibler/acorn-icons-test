@@ -48,8 +48,13 @@ export async function commitChanges(
   message: string,
 ) {
   await setupGit()
+
+  const branch = getEnv('GITHUB_HEAD_REF')?.replace('refs/heads/', '')
+
+  console.log(`Committing changes to ${branch}`)
+
   execSync(`git add ${files.join(' ')}`)
   execSync(`git commit -m "${message}"`)
-  execSync(`git push origin`)
+  execSync(`git push origin ${branch}`)
 }
 
