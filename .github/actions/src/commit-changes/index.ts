@@ -2,6 +2,7 @@ import { promises } from 'fs'
 import { simpleGit } from 'simple-git'
 import { getInput, tryCatch } from '../utils'
 import { summary } from '../summary'
+import { execSync } from 'child_process'
 
 const { writeFile } = promises
 
@@ -42,7 +43,6 @@ async function setupGit() {
     password ${process.env.INPUT_GITHUB_TOKEN}
   `
   await writeFile(`${process.env.HOME}/.netrc`, netrcContent, { mode: 0o600 })
-  simpleGit()
-    .raw(['config', '--global', 'user.email', '"actions@github.com"'])
-    .raw(['config', '--global', 'user.name', '"GitHub Action"'])
+  execSync('git config --global user.email "actions@github.com"')
+  execSync('git config --global user.name "GitHub Action"')
 }
