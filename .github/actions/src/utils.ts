@@ -40,3 +40,17 @@ export function setupGit() {
   execSync('git config --global user.email "actions@github.com"')
   execSync('git config --global user.name "GitHub Action"')
 }
+
+export function commitChanges(
+  files: string[],
+  message: string,
+  branch: string
+): void {
+  // make execSync calls to git
+  // git add files
+  execSync(`git add ${files.join(' ')}`)
+  // git commit -m message
+  execSync(`git commit -m "${message}"`)
+  // git push origin branch
+  execSync(`git push origin ${branch}`)
+}

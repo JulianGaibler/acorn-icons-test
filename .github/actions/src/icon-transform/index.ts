@@ -1,5 +1,5 @@
 import { optimize } from 'svgo'
-import { SVG_LICENSE, getEnv, getInput, setupGit } from '../utils'
+import { SVG_LICENSE, commitChanges, getEnv, getInput, setupGit } from '../utils'
 import fg from 'fast-glob'
 import fs from 'fs'
 import { simpleGit } from 'simple-git'
@@ -26,12 +26,7 @@ async function run() {
 
   console.log(chalk.green('Pushing changes to GitHub'))
 
-  const x = simpleGit()
-    .add(filesGlob)
-    .commit('Update SVGs', changedFiles)
-    .push('origin', 'master')
-
-    console.log('GIT: ', x)
+  commitChanges(changedFiles, 'Update SVGs', 'main')
   
   console.log(chalk.green('Done!'))
 }
