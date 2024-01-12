@@ -8,30 +8,30 @@ import chalk from 'chalk'
 async function run() {
   const filesGlob = getInput('files', true)
   const files = await fg(filesGlob)
+  const changedFiles = []
 
   let changed = false
   for (const file of files) {
     if (checkSvg(file)) {
+      console.log(chalk.green(`Updated ${file}`))
+      changedFiles.push(file)
       changed = true
     }
   }
 
   if (!changed) {
-    console.log('No files were changed')
+    console.log(chalk.yellow('No files changed'))
     return
   }
 
-  setupGit()
+  console.log(chalk.green('Pushing changes to GitHub'))
 
-  const git = simpleGit()
-
-  await git.add(filesGlob)
-  git.commit('Updated icons', {
-    '--author': `${getEnv('GITHUB_ACTOR')} <${getEnv(
-      'GITHUB_ACTOR',
-    )}@users.noreply.github.com>`,
-  })
-  git.push('origin')
+  simpleGit()
+    .add(filesGlob)
+    .commit('Update SVGs', changedFiles)
+    .push('origin', 'master')
+  
+  console.log(chalk.green('Done!'))
 }
 
 // return true if the file was changed

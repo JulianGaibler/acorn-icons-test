@@ -8662,7 +8662,7 @@ var require_types = __commonJS({
     "use strict";
     var EOF = 0;
     var Ident = 1;
-    var Function = 2;
+    var Function2 = 2;
     var AtKeyword = 3;
     var Hash = 4;
     var String2 = 5;
@@ -8697,7 +8697,7 @@ var require_types = __commonJS({
     exports2.Delim = Delim;
     exports2.Dimension = Dimension;
     exports2.EOF = EOF;
-    exports2.Function = Function;
+    exports2.Function = Function2;
     exports2.Hash = Hash;
     exports2.Ident = Ident;
     exports2.LeftCurlyBracket = LeftCurlyBracket;
@@ -29275,7 +29275,7 @@ var require_node2 = __commonJS({
     var Declaration = require_Declaration();
     var DeclarationList = require_DeclarationList();
     var Dimension = require_Dimension();
-    var Function = require_Function();
+    var Function2 = require_Function();
     var Hash = require_Hash();
     var Identifier = require_Identifier();
     var IdSelector = require_IdSelector();
@@ -29316,7 +29316,7 @@ var require_node2 = __commonJS({
     exports2.Declaration = Declaration;
     exports2.DeclarationList = DeclarationList;
     exports2.Dimension = Dimension;
-    exports2.Function = Function;
+    exports2.Function = Function2;
     exports2.Hash = Hash;
     exports2.Identifier = Identifier;
     exports2.IdSelector = IdSelector;
@@ -29858,7 +29858,7 @@ var require_index_parse = __commonJS({
     var Declaration = require_Declaration();
     var DeclarationList = require_DeclarationList();
     var Dimension = require_Dimension();
-    var Function = require_Function();
+    var Function2 = require_Function();
     var Hash = require_Hash();
     var Identifier = require_Identifier();
     var IdSelector = require_IdSelector();
@@ -29899,7 +29899,7 @@ var require_index_parse = __commonJS({
     exports2.Declaration = Declaration.parse;
     exports2.DeclarationList = DeclarationList.parse;
     exports2.Dimension = Dimension.parse;
-    exports2.Function = Function.parse;
+    exports2.Function = Function2.parse;
     exports2.Hash = Hash.parse;
     exports2.Identifier = Identifier.parse;
     exports2.IdSelector = IdSelector.parse;
@@ -30409,7 +30409,7 @@ var require_types2 = __commonJS({
     "use strict";
     var EOF = 0;
     var Ident = 1;
-    var Function = 2;
+    var Function2 = 2;
     var AtKeyword = 3;
     var Hash = 4;
     var String2 = 5;
@@ -30444,7 +30444,7 @@ var require_types2 = __commonJS({
     exports2.Delim = Delim;
     exports2.Dimension = Dimension;
     exports2.EOF = EOF;
-    exports2.Function = Function;
+    exports2.Function = Function2;
     exports2.Hash = Hash;
     exports2.Ident = Ident;
     exports2.LeftCurlyBracket = LeftCurlyBracket;
@@ -49696,7 +49696,7 @@ var require_node3 = __commonJS({
     var Declaration = require_Declaration2();
     var DeclarationList = require_DeclarationList2();
     var Dimension = require_Dimension2();
-    var Function = require_Function2();
+    var Function2 = require_Function2();
     var Hash = require_Hash2();
     var Identifier = require_Identifier2();
     var IdSelector = require_IdSelector2();
@@ -49736,7 +49736,7 @@ var require_node3 = __commonJS({
     exports2.Declaration = Declaration;
     exports2.DeclarationList = DeclarationList;
     exports2.Dimension = Dimension;
-    exports2.Function = Function;
+    exports2.Function = Function2;
     exports2.Hash = Hash;
     exports2.Identifier = Identifier;
     exports2.IdSelector = IdSelector;
@@ -50250,7 +50250,7 @@ var require_index_parse2 = __commonJS({
     var Declaration = require_Declaration2();
     var DeclarationList = require_DeclarationList2();
     var Dimension = require_Dimension2();
-    var Function = require_Function2();
+    var Function2 = require_Function2();
     var Hash = require_Hash2();
     var Identifier = require_Identifier2();
     var IdSelector = require_IdSelector2();
@@ -50290,7 +50290,7 @@ var require_index_parse2 = __commonJS({
     exports2.Declaration = Declaration.parse;
     exports2.DeclarationList = DeclarationList.parse;
     exports2.Dimension = Dimension.parse;
-    exports2.Function = Function.parse;
+    exports2.Function = Function2.parse;
     exports2.Hash = Hash.parse;
     exports2.Identifier = Identifier.parse;
     exports2.IdSelector = IdSelector.parse;
@@ -53783,7 +53783,7 @@ var require_inlineStyles = __commonJS({
         useMqs = ["", "screen"],
         usePseudos = [""]
       } = params;
-      const styles = [];
+      const styles3 = [];
       let selectors = [];
       return {
         element: {
@@ -53808,7 +53808,7 @@ var require_inlineStyles = __commonJS({
               return;
             }
             if (cssAst.type === "StyleSheet") {
-              styles.push({ node, parentNode, cssAst });
+              styles3.push({ node, parentNode, cssAst });
             }
             csstree.walk(cssAst, {
               visit: "Rule",
@@ -53861,7 +53861,7 @@ var require_inlineStyles = __commonJS({
         root: {
           exit: () => {
             var _a2;
-            if (styles.length === 0) {
+            if (styles3.length === 0) {
               return;
             }
             const sortedSelectors = selectors.slice().sort((a, b) => {
@@ -53988,7 +53988,7 @@ var require_inlineStyles = __commonJS({
                 }
               }
             }
-            for (const style of styles) {
+            for (const style of styles3) {
               csstree.walk(style.cssAst, {
                 visit: "Rule",
                 enter: function(node, item, list) {
@@ -58772,7 +58772,7 @@ var require_convertStyleToAttrs = __commonJS({
         element: {
           enter: (node) => {
             if (node.attributes.style != null) {
-              let styles = [];
+              let styles3 = [];
               const newAttributes = {};
               const styleValue = node.attributes.style.replace(
                 regStripComments,
@@ -58783,11 +58783,11 @@ var require_convertStyleToAttrs = __commonJS({
               regDeclarationBlock.lastIndex = 0;
               for (var rule; rule = regDeclarationBlock.exec(styleValue); ) {
                 if (!keepImportant || !rule[3]) {
-                  styles.push([rule[1], rule[2]]);
+                  styles3.push([rule[1], rule[2]]);
                 }
               }
-              if (styles.length) {
-                styles = styles.filter(function(style) {
+              if (styles3.length) {
+                styles3 = styles3.filter(function(style) {
                   if (style[0]) {
                     var prop = style[0].toLowerCase(), val = style[1];
                     if (rQuotedString.test(val)) {
@@ -58801,8 +58801,8 @@ var require_convertStyleToAttrs = __commonJS({
                   return true;
                 });
                 Object.assign(node.attributes, newAttributes);
-                if (styles.length) {
-                  node.attributes.style = styles.map((declaration) => declaration.join(":")).join(";");
+                if (styles3.length) {
+                  node.attributes.style = styles3.map((declaration) => declaration.join(":")).join(";");
                 } else {
                   delete node.attributes.style;
                 }
@@ -59749,8 +59749,8 @@ var require_svgo = __commonJS({
 var require_svgo_node = __commonJS({
   "node_modules/svgo/lib/svgo-node.js"(exports2) {
     "use strict";
-    var os = require("os");
-    var fs3 = require("fs");
+    var os2 = require("os");
+    var fs2 = require("fs");
     var { pathToFileURL } = require("url");
     var path = require("path");
     var { optimize: optimizeAgnostic } = require_svgo();
@@ -59769,7 +59769,7 @@ var require_svgo_node = __commonJS({
     };
     var isFile = async (file) => {
       try {
-        const stats = await fs3.promises.stat(file);
+        const stats = await fs2.promises.stat(file);
         return stats.isFile();
       } catch {
         return false;
@@ -59816,7 +59816,7 @@ var require_svgo_node = __commonJS({
         ...config,
         js2svg: {
           // platform specific default for end of line
-          eol: os.EOL === "\r\n" ? "crlf" : "lf",
+          eol: os2.EOL === "\r\n" ? "crlf" : "lf",
           ...config.js2svg
         }
       });
@@ -59896,9 +59896,9 @@ var require_path3 = __commonJS({
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.convertPosixPathToPattern = exports2.convertWindowsPathToPattern = exports2.convertPathToPattern = exports2.escapePosixPath = exports2.escapeWindowsPath = exports2.escape = exports2.removeLeadingDotSegment = exports2.makeAbsolute = exports2.unixify = void 0;
-    var os = require("os");
+    var os2 = require("os");
     var path = require("path");
-    var IS_WINDOWS_PLATFORM = os.platform() === "win32";
+    var IS_WINDOWS_PLATFORM = os2.platform() === "win32";
     var LEADING_DOT_SEGMENT_CHARACTERS_COUNT = 2;
     var POSIX_UNESCAPED_GLOB_SYMBOLS_RE = /(\\?)([()*?[\]{|}]|^!|[!+@](?=\()|\\(?![!()*+?@[\]{|}]))/g;
     var WINDOWS_UNESCAPED_GLOB_SYMBOLS_RE = /(\\?)([()[\]{}]|^!|[!+@](?=\())/g;
@@ -63233,8 +63233,8 @@ var require_utils8 = __commonJS({
     exports2.array = array;
     var errno = require_errno();
     exports2.errno = errno;
-    var fs3 = require_fs();
-    exports2.fs = fs3;
+    var fs2 = require_fs();
+    exports2.fs = fs2;
     var path = require_path3();
     exports2.path = path;
     var pattern = require_pattern();
@@ -63418,12 +63418,12 @@ var require_fs2 = __commonJS({
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.createFileSystemAdapter = exports2.FILE_SYSTEM_ADAPTER = void 0;
-    var fs3 = require("fs");
+    var fs2 = require("fs");
     exports2.FILE_SYSTEM_ADAPTER = {
-      lstat: fs3.lstat,
-      stat: fs3.stat,
-      lstatSync: fs3.lstatSync,
-      statSync: fs3.statSync
+      lstat: fs2.lstat,
+      stat: fs2.stat,
+      lstatSync: fs2.lstatSync,
+      statSync: fs2.statSync
     };
     function createFileSystemAdapter(fsMethods) {
       if (fsMethods === void 0) {
@@ -63440,12 +63440,12 @@ var require_settings = __commonJS({
   "node_modules/@nodelib/fs.stat/out/settings.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
-    var fs3 = require_fs2();
+    var fs2 = require_fs2();
     var Settings = class {
       constructor(_options = {}) {
         this._options = _options;
         this.followSymbolicLink = this._getValue(this._options.followSymbolicLink, true);
-        this.fs = fs3.createFileSystemAdapter(this._options.fs);
+        this.fs = fs2.createFileSystemAdapter(this._options.fs);
         this.markSymbolicLink = this._getValue(this._options.markSymbolicLink, false);
         this.throwErrorOnBrokenSymbolicLink = this._getValue(this._options.throwErrorOnBrokenSymbolicLink, true);
       }
@@ -63605,8 +63605,8 @@ var require_utils9 = __commonJS({
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.fs = void 0;
-    var fs3 = require_fs3();
-    exports2.fs = fs3;
+    var fs2 = require_fs3();
+    exports2.fs = fs2;
   }
 });
 
@@ -63801,14 +63801,14 @@ var require_fs4 = __commonJS({
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.createFileSystemAdapter = exports2.FILE_SYSTEM_ADAPTER = void 0;
-    var fs3 = require("fs");
+    var fs2 = require("fs");
     exports2.FILE_SYSTEM_ADAPTER = {
-      lstat: fs3.lstat,
-      stat: fs3.stat,
-      lstatSync: fs3.lstatSync,
-      statSync: fs3.statSync,
-      readdir: fs3.readdir,
-      readdirSync: fs3.readdirSync
+      lstat: fs2.lstat,
+      stat: fs2.stat,
+      lstatSync: fs2.lstatSync,
+      statSync: fs2.statSync,
+      readdir: fs2.readdir,
+      readdirSync: fs2.readdirSync
     };
     function createFileSystemAdapter(fsMethods) {
       if (fsMethods === void 0) {
@@ -63827,12 +63827,12 @@ var require_settings2 = __commonJS({
     Object.defineProperty(exports2, "__esModule", { value: true });
     var path = require("path");
     var fsStat = require_out();
-    var fs3 = require_fs4();
+    var fs2 = require_fs4();
     var Settings = class {
       constructor(_options = {}) {
         this._options = _options;
         this.followSymbolicLinks = this._getValue(this._options.followSymbolicLinks, false);
-        this.fs = fs3.createFileSystemAdapter(this._options.fs);
+        this.fs = fs2.createFileSystemAdapter(this._options.fs);
         this.pathSegmentSeparator = this._getValue(this._options.pathSegmentSeparator, path.sep);
         this.stats = this._getValue(this._options.stats, false);
         this.throwErrorOnBrokenSymbolicLink = this._getValue(this._options.throwErrorOnBrokenSymbolicLink, true);
@@ -65149,16 +65149,16 @@ var require_settings4 = __commonJS({
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.DEFAULT_FILE_SYSTEM_ADAPTER = void 0;
-    var fs3 = require("fs");
-    var os = require("os");
-    var CPU_COUNT = Math.max(os.cpus().length, 1);
+    var fs2 = require("fs");
+    var os2 = require("os");
+    var CPU_COUNT = Math.max(os2.cpus().length, 1);
     exports2.DEFAULT_FILE_SYSTEM_ADAPTER = {
-      lstat: fs3.lstat,
-      lstatSync: fs3.lstatSync,
-      stat: fs3.stat,
-      statSync: fs3.statSync,
-      readdir: fs3.readdir,
-      readdirSync: fs3.readdirSync
+      lstat: fs2.lstat,
+      lstatSync: fs2.lstatSync,
+      stat: fs2.stat,
+      statSync: fs2.statSync,
+      readdir: fs2.readdir,
+      readdirSync: fs2.readdirSync
     };
     var Settings = class {
       constructor(_options = {}) {
@@ -65425,7 +65425,7 @@ var require_ms = __commonJS({
 var require_common3 = __commonJS({
   "node_modules/debug/src/common.js"(exports2, module2) {
     "use strict";
-    function setup(env) {
+    function setup(env2) {
       createDebug.debug = createDebug;
       createDebug.default = createDebug;
       createDebug.coerce = coerce;
@@ -65434,8 +65434,8 @@ var require_common3 = __commonJS({
       createDebug.enabled = enabled;
       createDebug.humanize = require_ms();
       createDebug.destroy = destroy;
-      Object.keys(env).forEach((key) => {
-        createDebug[key] = env[key];
+      Object.keys(env2).forEach((key) => {
+        createDebug[key] = env2[key];
       });
       createDebug.names = [];
       createDebug.skips = [];
@@ -65772,26 +65772,26 @@ var require_has_flag = __commonJS({
 var require_supports_color = __commonJS({
   "node_modules/supports-color/index.js"(exports2, module2) {
     "use strict";
-    var os = require("os");
-    var tty = require("tty");
-    var hasFlag = require_has_flag();
-    var { env } = process;
+    var os2 = require("os");
+    var tty2 = require("tty");
+    var hasFlag2 = require_has_flag();
+    var { env: env2 } = process;
     var forceColor;
-    if (hasFlag("no-color") || hasFlag("no-colors") || hasFlag("color=false") || hasFlag("color=never")) {
+    if (hasFlag2("no-color") || hasFlag2("no-colors") || hasFlag2("color=false") || hasFlag2("color=never")) {
       forceColor = 0;
-    } else if (hasFlag("color") || hasFlag("colors") || hasFlag("color=true") || hasFlag("color=always")) {
+    } else if (hasFlag2("color") || hasFlag2("colors") || hasFlag2("color=true") || hasFlag2("color=always")) {
       forceColor = 1;
     }
-    if ("FORCE_COLOR" in env) {
-      if (env.FORCE_COLOR === "true") {
+    if ("FORCE_COLOR" in env2) {
+      if (env2.FORCE_COLOR === "true") {
         forceColor = 1;
-      } else if (env.FORCE_COLOR === "false") {
+      } else if (env2.FORCE_COLOR === "false") {
         forceColor = 0;
       } else {
-        forceColor = env.FORCE_COLOR.length === 0 ? 1 : Math.min(parseInt(env.FORCE_COLOR, 10), 3);
+        forceColor = env2.FORCE_COLOR.length === 0 ? 1 : Math.min(parseInt(env2.FORCE_COLOR, 10), 3);
       }
     }
-    function translateLevel(level) {
+    function translateLevel2(level) {
       if (level === 0) {
         return false;
       }
@@ -65802,70 +65802,70 @@ var require_supports_color = __commonJS({
         has16m: level >= 3
       };
     }
-    function supportsColor(haveStream, streamIsTTY) {
+    function supportsColor2(haveStream, streamIsTTY) {
       if (forceColor === 0) {
         return 0;
       }
-      if (hasFlag("color=16m") || hasFlag("color=full") || hasFlag("color=truecolor")) {
+      if (hasFlag2("color=16m") || hasFlag2("color=full") || hasFlag2("color=truecolor")) {
         return 3;
       }
-      if (hasFlag("color=256")) {
+      if (hasFlag2("color=256")) {
         return 2;
       }
       if (haveStream && !streamIsTTY && forceColor === void 0) {
         return 0;
       }
       const min = forceColor || 0;
-      if (env.TERM === "dumb") {
+      if (env2.TERM === "dumb") {
         return min;
       }
       if (process.platform === "win32") {
-        const osRelease = os.release().split(".");
+        const osRelease = os2.release().split(".");
         if (Number(osRelease[0]) >= 10 && Number(osRelease[2]) >= 10586) {
           return Number(osRelease[2]) >= 14931 ? 3 : 2;
         }
         return 1;
       }
-      if ("CI" in env) {
-        if (["TRAVIS", "CIRCLECI", "APPVEYOR", "GITLAB_CI", "GITHUB_ACTIONS", "BUILDKITE"].some((sign) => sign in env) || env.CI_NAME === "codeship") {
+      if ("CI" in env2) {
+        if (["TRAVIS", "CIRCLECI", "APPVEYOR", "GITLAB_CI", "GITHUB_ACTIONS", "BUILDKITE"].some((sign) => sign in env2) || env2.CI_NAME === "codeship") {
           return 1;
         }
         return min;
       }
-      if ("TEAMCITY_VERSION" in env) {
-        return /^(9\.(0*[1-9]\d*)\.|\d{2,}\.)/.test(env.TEAMCITY_VERSION) ? 1 : 0;
+      if ("TEAMCITY_VERSION" in env2) {
+        return /^(9\.(0*[1-9]\d*)\.|\d{2,}\.)/.test(env2.TEAMCITY_VERSION) ? 1 : 0;
       }
-      if (env.COLORTERM === "truecolor") {
+      if (env2.COLORTERM === "truecolor") {
         return 3;
       }
-      if ("TERM_PROGRAM" in env) {
-        const version = parseInt((env.TERM_PROGRAM_VERSION || "").split(".")[0], 10);
-        switch (env.TERM_PROGRAM) {
+      if ("TERM_PROGRAM" in env2) {
+        const version = parseInt((env2.TERM_PROGRAM_VERSION || "").split(".")[0], 10);
+        switch (env2.TERM_PROGRAM) {
           case "iTerm.app":
             return version >= 3 ? 3 : 2;
           case "Apple_Terminal":
             return 2;
         }
       }
-      if (/-256(color)?$/i.test(env.TERM)) {
+      if (/-256(color)?$/i.test(env2.TERM)) {
         return 2;
       }
-      if (/^screen|^xterm|^vt100|^vt220|^rxvt|color|ansi|cygwin|linux/i.test(env.TERM)) {
+      if (/^screen|^xterm|^vt100|^vt220|^rxvt|color|ansi|cygwin|linux/i.test(env2.TERM)) {
         return 1;
       }
-      if ("COLORTERM" in env) {
+      if ("COLORTERM" in env2) {
         return 1;
       }
       return min;
     }
     function getSupportLevel(stream) {
-      const level = supportsColor(stream, stream && stream.isTTY);
-      return translateLevel(level);
+      const level = supportsColor2(stream, stream && stream.isTTY);
+      return translateLevel2(level);
     }
     module2.exports = {
       supportsColor: getSupportLevel,
-      stdout: translateLevel(supportsColor(true, tty.isatty(1))),
-      stderr: translateLevel(supportsColor(true, tty.isatty(2)))
+      stdout: translateLevel2(supportsColor2(true, tty2.isatty(1))),
+      stderr: translateLevel2(supportsColor2(true, tty2.isatty(2)))
     };
   }
 });
@@ -65874,7 +65874,7 @@ var require_supports_color = __commonJS({
 var require_node4 = __commonJS({
   "node_modules/debug/src/node.js"(exports2, module2) {
     "use strict";
-    var tty = require("tty");
+    var tty2 = require("tty");
     var util = require("util");
     exports2.init = init;
     exports2.log = log;
@@ -65889,8 +65889,8 @@ var require_node4 = __commonJS({
     );
     exports2.colors = [6, 2, 3, 4, 5, 1];
     try {
-      const supportsColor = require_supports_color();
-      if (supportsColor && (supportsColor.stderr || supportsColor).level >= 2) {
+      const supportsColor2 = require_supports_color();
+      if (supportsColor2 && (supportsColor2.stderr || supportsColor2).level >= 2) {
         exports2.colors = [
           20,
           21,
@@ -65992,7 +65992,7 @@ var require_node4 = __commonJS({
       return obj;
     }, {});
     function useColors() {
-      return "colors" in exports2.inspectOpts ? Boolean(exports2.inspectOpts.colors) : tty.isatty(process.stderr.fd);
+      return "colors" in exports2.inspectOpts ? Boolean(exports2.inspectOpts.colors) : tty2.isatty(process.stderr.fd);
     }
     function formatArgs(args) {
       const { namespace: name, useColors: useColors2 } = this;
@@ -66161,8 +66161,6 @@ var require_dist2 = __commonJS({
 var import_svgo = __toESM(require_svgo_node(), 1);
 
 // src/utils.ts
-var import_child_process = require("child_process");
-var import_fs = __toESM(require("fs"), 1);
 var SVG_LICENSE = `<!-- This Source Code Form is subject to the terms of the Mozilla Public
 - License, v. 2.0. If a copy of the MPL was not distributed with this
 - file, You can obtain one at http://mozilla.org/MPL/2.0/. -->`;
@@ -66173,34 +66171,15 @@ function getInput(name, required = true) {
   }
   return val.trim();
 }
-function getEnv(name) {
-  return process.env[name] || "";
-}
-function setupGit() {
-  if (!process.env.GITHUB_ACTOR) {
-    return;
-  }
-  const netrcContent = `
-    machine github.com
-    login ${process.env.GITHUB_ACTOR}
-    password ${process.env.INPUT_GITHUB_TOKEN}
-    machine api.github.com
-    login ${process.env.GITHUB_ACTOR}
-    password ${process.env.INPUT_GITHUB_TOKEN}
-  `;
-  import_fs.default.writeFileSync(`${process.env.HOME}/.netrc`, netrcContent, { mode: 384 });
-  (0, import_child_process.execSync)('git config --global user.email "actions@github.com"');
-  (0, import_child_process.execSync)('git config --global user.name "GitHub Action"');
-}
 
 // src/icon-transform/index.ts
 var import_fast_glob = __toESM(require_out4(), 1);
-var import_fs2 = __toESM(require("fs"), 1);
+var import_fs = __toESM(require("fs"), 1);
 
 // node_modules/simple-git/dist/esm/index.js
 var import_file_exists = __toESM(require_dist(), 1);
 var import_debug = __toESM(require_src(), 1);
-var import_child_process2 = require("child_process");
+var import_child_process = require("child_process");
 var import_promise_deferred = __toESM(require_dist2(), 1);
 var import_promise_deferred2 = __toESM(require_dist2(), 1);
 var __defProp2 = Object.defineProperty;
@@ -67520,7 +67499,7 @@ var init_git_executor_chain = __esm2({
                 rejection = reason || rejection;
               }
             }));
-            const spawned = (0, import_child_process2.spawn)(command, args, spawnOptions);
+            const spawned = (0, import_child_process.spawn)(command, args, spawnOptions);
             spawned.stdout.on("data", onDataReceived(stdOut, "stdOut", logger, outputLogger.step("stdOut")));
             spawned.stderr.on("data", onDataReceived(stdErr, "stdErr", logger, outputLogger.step("stdErr")));
             spawned.on("error", onErrorReceived(stdErr, logger));
@@ -70151,35 +70130,521 @@ function gitInstanceFactory(baseDir, options) {
 init_git_response_error();
 var simpleGit = gitInstanceFactory;
 
+// node_modules/chalk/source/vendor/ansi-styles/index.js
+var ANSI_BACKGROUND_OFFSET = 10;
+var wrapAnsi16 = (offset = 0) => (code) => `\x1B[${code + offset}m`;
+var wrapAnsi256 = (offset = 0) => (code) => `\x1B[${38 + offset};5;${code}m`;
+var wrapAnsi16m = (offset = 0) => (red, green, blue) => `\x1B[${38 + offset};2;${red};${green};${blue}m`;
+var styles = {
+  modifier: {
+    reset: [0, 0],
+    // 21 isn't widely supported and 22 does the same thing
+    bold: [1, 22],
+    dim: [2, 22],
+    italic: [3, 23],
+    underline: [4, 24],
+    overline: [53, 55],
+    inverse: [7, 27],
+    hidden: [8, 28],
+    strikethrough: [9, 29]
+  },
+  color: {
+    black: [30, 39],
+    red: [31, 39],
+    green: [32, 39],
+    yellow: [33, 39],
+    blue: [34, 39],
+    magenta: [35, 39],
+    cyan: [36, 39],
+    white: [37, 39],
+    // Bright color
+    blackBright: [90, 39],
+    gray: [90, 39],
+    // Alias of `blackBright`
+    grey: [90, 39],
+    // Alias of `blackBright`
+    redBright: [91, 39],
+    greenBright: [92, 39],
+    yellowBright: [93, 39],
+    blueBright: [94, 39],
+    magentaBright: [95, 39],
+    cyanBright: [96, 39],
+    whiteBright: [97, 39]
+  },
+  bgColor: {
+    bgBlack: [40, 49],
+    bgRed: [41, 49],
+    bgGreen: [42, 49],
+    bgYellow: [43, 49],
+    bgBlue: [44, 49],
+    bgMagenta: [45, 49],
+    bgCyan: [46, 49],
+    bgWhite: [47, 49],
+    // Bright color
+    bgBlackBright: [100, 49],
+    bgGray: [100, 49],
+    // Alias of `bgBlackBright`
+    bgGrey: [100, 49],
+    // Alias of `bgBlackBright`
+    bgRedBright: [101, 49],
+    bgGreenBright: [102, 49],
+    bgYellowBright: [103, 49],
+    bgBlueBright: [104, 49],
+    bgMagentaBright: [105, 49],
+    bgCyanBright: [106, 49],
+    bgWhiteBright: [107, 49]
+  }
+};
+var modifierNames = Object.keys(styles.modifier);
+var foregroundColorNames = Object.keys(styles.color);
+var backgroundColorNames = Object.keys(styles.bgColor);
+var colorNames = [...foregroundColorNames, ...backgroundColorNames];
+function assembleStyles() {
+  const codes = /* @__PURE__ */ new Map();
+  for (const [groupName, group] of Object.entries(styles)) {
+    for (const [styleName, style] of Object.entries(group)) {
+      styles[styleName] = {
+        open: `\x1B[${style[0]}m`,
+        close: `\x1B[${style[1]}m`
+      };
+      group[styleName] = styles[styleName];
+      codes.set(style[0], style[1]);
+    }
+    Object.defineProperty(styles, groupName, {
+      value: group,
+      enumerable: false
+    });
+  }
+  Object.defineProperty(styles, "codes", {
+    value: codes,
+    enumerable: false
+  });
+  styles.color.close = "\x1B[39m";
+  styles.bgColor.close = "\x1B[49m";
+  styles.color.ansi = wrapAnsi16();
+  styles.color.ansi256 = wrapAnsi256();
+  styles.color.ansi16m = wrapAnsi16m();
+  styles.bgColor.ansi = wrapAnsi16(ANSI_BACKGROUND_OFFSET);
+  styles.bgColor.ansi256 = wrapAnsi256(ANSI_BACKGROUND_OFFSET);
+  styles.bgColor.ansi16m = wrapAnsi16m(ANSI_BACKGROUND_OFFSET);
+  Object.defineProperties(styles, {
+    rgbToAnsi256: {
+      value(red, green, blue) {
+        if (red === green && green === blue) {
+          if (red < 8) {
+            return 16;
+          }
+          if (red > 248) {
+            return 231;
+          }
+          return Math.round((red - 8) / 247 * 24) + 232;
+        }
+        return 16 + 36 * Math.round(red / 255 * 5) + 6 * Math.round(green / 255 * 5) + Math.round(blue / 255 * 5);
+      },
+      enumerable: false
+    },
+    hexToRgb: {
+      value(hex) {
+        const matches = /[a-f\d]{6}|[a-f\d]{3}/i.exec(hex.toString(16));
+        if (!matches) {
+          return [0, 0, 0];
+        }
+        let [colorString] = matches;
+        if (colorString.length === 3) {
+          colorString = [...colorString].map((character) => character + character).join("");
+        }
+        const integer = Number.parseInt(colorString, 16);
+        return [
+          /* eslint-disable no-bitwise */
+          integer >> 16 & 255,
+          integer >> 8 & 255,
+          integer & 255
+          /* eslint-enable no-bitwise */
+        ];
+      },
+      enumerable: false
+    },
+    hexToAnsi256: {
+      value: (hex) => styles.rgbToAnsi256(...styles.hexToRgb(hex)),
+      enumerable: false
+    },
+    ansi256ToAnsi: {
+      value(code) {
+        if (code < 8) {
+          return 30 + code;
+        }
+        if (code < 16) {
+          return 90 + (code - 8);
+        }
+        let red;
+        let green;
+        let blue;
+        if (code >= 232) {
+          red = ((code - 232) * 10 + 8) / 255;
+          green = red;
+          blue = red;
+        } else {
+          code -= 16;
+          const remainder = code % 36;
+          red = Math.floor(code / 36) / 5;
+          green = Math.floor(remainder / 6) / 5;
+          blue = remainder % 6 / 5;
+        }
+        const value = Math.max(red, green, blue) * 2;
+        if (value === 0) {
+          return 30;
+        }
+        let result = 30 + (Math.round(blue) << 2 | Math.round(green) << 1 | Math.round(red));
+        if (value === 2) {
+          result += 60;
+        }
+        return result;
+      },
+      enumerable: false
+    },
+    rgbToAnsi: {
+      value: (red, green, blue) => styles.ansi256ToAnsi(styles.rgbToAnsi256(red, green, blue)),
+      enumerable: false
+    },
+    hexToAnsi: {
+      value: (hex) => styles.ansi256ToAnsi(styles.hexToAnsi256(hex)),
+      enumerable: false
+    }
+  });
+  return styles;
+}
+var ansiStyles = assembleStyles();
+var ansi_styles_default = ansiStyles;
+
+// node_modules/chalk/source/vendor/supports-color/index.js
+var import_node_process = __toESM(require("process"), 1);
+var import_node_os = __toESM(require("os"), 1);
+var import_node_tty = __toESM(require("tty"), 1);
+function hasFlag(flag, argv = globalThis.Deno ? globalThis.Deno.args : import_node_process.default.argv) {
+  const prefix = flag.startsWith("-") ? "" : flag.length === 1 ? "-" : "--";
+  const position = argv.indexOf(prefix + flag);
+  const terminatorPosition = argv.indexOf("--");
+  return position !== -1 && (terminatorPosition === -1 || position < terminatorPosition);
+}
+var { env } = import_node_process.default;
+var flagForceColor;
+if (hasFlag("no-color") || hasFlag("no-colors") || hasFlag("color=false") || hasFlag("color=never")) {
+  flagForceColor = 0;
+} else if (hasFlag("color") || hasFlag("colors") || hasFlag("color=true") || hasFlag("color=always")) {
+  flagForceColor = 1;
+}
+function envForceColor() {
+  if ("FORCE_COLOR" in env) {
+    if (env.FORCE_COLOR === "true") {
+      return 1;
+    }
+    if (env.FORCE_COLOR === "false") {
+      return 0;
+    }
+    return env.FORCE_COLOR.length === 0 ? 1 : Math.min(Number.parseInt(env.FORCE_COLOR, 10), 3);
+  }
+}
+function translateLevel(level) {
+  if (level === 0) {
+    return false;
+  }
+  return {
+    level,
+    hasBasic: true,
+    has256: level >= 2,
+    has16m: level >= 3
+  };
+}
+function _supportsColor(haveStream, { streamIsTTY, sniffFlags = true } = {}) {
+  const noFlagForceColor = envForceColor();
+  if (noFlagForceColor !== void 0) {
+    flagForceColor = noFlagForceColor;
+  }
+  const forceColor = sniffFlags ? flagForceColor : noFlagForceColor;
+  if (forceColor === 0) {
+    return 0;
+  }
+  if (sniffFlags) {
+    if (hasFlag("color=16m") || hasFlag("color=full") || hasFlag("color=truecolor")) {
+      return 3;
+    }
+    if (hasFlag("color=256")) {
+      return 2;
+    }
+  }
+  if ("TF_BUILD" in env && "AGENT_NAME" in env) {
+    return 1;
+  }
+  if (haveStream && !streamIsTTY && forceColor === void 0) {
+    return 0;
+  }
+  const min = forceColor || 0;
+  if (env.TERM === "dumb") {
+    return min;
+  }
+  if (import_node_process.default.platform === "win32") {
+    const osRelease = import_node_os.default.release().split(".");
+    if (Number(osRelease[0]) >= 10 && Number(osRelease[2]) >= 10586) {
+      return Number(osRelease[2]) >= 14931 ? 3 : 2;
+    }
+    return 1;
+  }
+  if ("CI" in env) {
+    if ("GITHUB_ACTIONS" in env || "GITEA_ACTIONS" in env) {
+      return 3;
+    }
+    if (["TRAVIS", "CIRCLECI", "APPVEYOR", "GITLAB_CI", "BUILDKITE", "DRONE"].some((sign) => sign in env) || env.CI_NAME === "codeship") {
+      return 1;
+    }
+    return min;
+  }
+  if ("TEAMCITY_VERSION" in env) {
+    return /^(9\.(0*[1-9]\d*)\.|\d{2,}\.)/.test(env.TEAMCITY_VERSION) ? 1 : 0;
+  }
+  if (env.COLORTERM === "truecolor") {
+    return 3;
+  }
+  if (env.TERM === "xterm-kitty") {
+    return 3;
+  }
+  if ("TERM_PROGRAM" in env) {
+    const version = Number.parseInt((env.TERM_PROGRAM_VERSION || "").split(".")[0], 10);
+    switch (env.TERM_PROGRAM) {
+      case "iTerm.app": {
+        return version >= 3 ? 3 : 2;
+      }
+      case "Apple_Terminal": {
+        return 2;
+      }
+    }
+  }
+  if (/-256(color)?$/i.test(env.TERM)) {
+    return 2;
+  }
+  if (/^screen|^xterm|^vt100|^vt220|^rxvt|color|ansi|cygwin|linux/i.test(env.TERM)) {
+    return 1;
+  }
+  if ("COLORTERM" in env) {
+    return 1;
+  }
+  return min;
+}
+function createSupportsColor(stream, options = {}) {
+  const level = _supportsColor(stream, {
+    streamIsTTY: stream && stream.isTTY,
+    ...options
+  });
+  return translateLevel(level);
+}
+var supportsColor = {
+  stdout: createSupportsColor({ isTTY: import_node_tty.default.isatty(1) }),
+  stderr: createSupportsColor({ isTTY: import_node_tty.default.isatty(2) })
+};
+var supports_color_default = supportsColor;
+
+// node_modules/chalk/source/utilities.js
+function stringReplaceAll(string, substring, replacer) {
+  let index = string.indexOf(substring);
+  if (index === -1) {
+    return string;
+  }
+  const substringLength = substring.length;
+  let endIndex = 0;
+  let returnValue = "";
+  do {
+    returnValue += string.slice(endIndex, index) + substring + replacer;
+    endIndex = index + substringLength;
+    index = string.indexOf(substring, endIndex);
+  } while (index !== -1);
+  returnValue += string.slice(endIndex);
+  return returnValue;
+}
+function stringEncaseCRLFWithFirstIndex(string, prefix, postfix, index) {
+  let endIndex = 0;
+  let returnValue = "";
+  do {
+    const gotCR = string[index - 1] === "\r";
+    returnValue += string.slice(endIndex, gotCR ? index - 1 : index) + prefix + (gotCR ? "\r\n" : "\n") + postfix;
+    endIndex = index + 1;
+    index = string.indexOf("\n", endIndex);
+  } while (index !== -1);
+  returnValue += string.slice(endIndex);
+  return returnValue;
+}
+
+// node_modules/chalk/source/index.js
+var { stdout: stdoutColor, stderr: stderrColor } = supports_color_default;
+var GENERATOR = Symbol("GENERATOR");
+var STYLER = Symbol("STYLER");
+var IS_EMPTY = Symbol("IS_EMPTY");
+var levelMapping = [
+  "ansi",
+  "ansi",
+  "ansi256",
+  "ansi16m"
+];
+var styles2 = /* @__PURE__ */ Object.create(null);
+var applyOptions = (object, options = {}) => {
+  if (options.level && !(Number.isInteger(options.level) && options.level >= 0 && options.level <= 3)) {
+    throw new Error("The `level` option should be an integer from 0 to 3");
+  }
+  const colorLevel = stdoutColor ? stdoutColor.level : 0;
+  object.level = options.level === void 0 ? colorLevel : options.level;
+};
+var chalkFactory = (options) => {
+  const chalk2 = (...strings) => strings.join(" ");
+  applyOptions(chalk2, options);
+  Object.setPrototypeOf(chalk2, createChalk.prototype);
+  return chalk2;
+};
+function createChalk(options) {
+  return chalkFactory(options);
+}
+Object.setPrototypeOf(createChalk.prototype, Function.prototype);
+for (const [styleName, style] of Object.entries(ansi_styles_default)) {
+  styles2[styleName] = {
+    get() {
+      const builder = createBuilder(this, createStyler(style.open, style.close, this[STYLER]), this[IS_EMPTY]);
+      Object.defineProperty(this, styleName, { value: builder });
+      return builder;
+    }
+  };
+}
+styles2.visible = {
+  get() {
+    const builder = createBuilder(this, this[STYLER], true);
+    Object.defineProperty(this, "visible", { value: builder });
+    return builder;
+  }
+};
+var getModelAnsi = (model, level, type, ...arguments_) => {
+  if (model === "rgb") {
+    if (level === "ansi16m") {
+      return ansi_styles_default[type].ansi16m(...arguments_);
+    }
+    if (level === "ansi256") {
+      return ansi_styles_default[type].ansi256(ansi_styles_default.rgbToAnsi256(...arguments_));
+    }
+    return ansi_styles_default[type].ansi(ansi_styles_default.rgbToAnsi(...arguments_));
+  }
+  if (model === "hex") {
+    return getModelAnsi("rgb", level, type, ...ansi_styles_default.hexToRgb(...arguments_));
+  }
+  return ansi_styles_default[type][model](...arguments_);
+};
+var usedModels = ["rgb", "hex", "ansi256"];
+for (const model of usedModels) {
+  styles2[model] = {
+    get() {
+      const { level } = this;
+      return function(...arguments_) {
+        const styler = createStyler(getModelAnsi(model, levelMapping[level], "color", ...arguments_), ansi_styles_default.color.close, this[STYLER]);
+        return createBuilder(this, styler, this[IS_EMPTY]);
+      };
+    }
+  };
+  const bgModel = "bg" + model[0].toUpperCase() + model.slice(1);
+  styles2[bgModel] = {
+    get() {
+      const { level } = this;
+      return function(...arguments_) {
+        const styler = createStyler(getModelAnsi(model, levelMapping[level], "bgColor", ...arguments_), ansi_styles_default.bgColor.close, this[STYLER]);
+        return createBuilder(this, styler, this[IS_EMPTY]);
+      };
+    }
+  };
+}
+var proto = Object.defineProperties(() => {
+}, {
+  ...styles2,
+  level: {
+    enumerable: true,
+    get() {
+      return this[GENERATOR].level;
+    },
+    set(level) {
+      this[GENERATOR].level = level;
+    }
+  }
+});
+var createStyler = (open, close, parent) => {
+  let openAll;
+  let closeAll;
+  if (parent === void 0) {
+    openAll = open;
+    closeAll = close;
+  } else {
+    openAll = parent.openAll + open;
+    closeAll = close + parent.closeAll;
+  }
+  return {
+    open,
+    close,
+    openAll,
+    closeAll,
+    parent
+  };
+};
+var createBuilder = (self, _styler, _isEmpty) => {
+  const builder = (...arguments_) => applyStyle(builder, arguments_.length === 1 ? "" + arguments_[0] : arguments_.join(" "));
+  Object.setPrototypeOf(builder, proto);
+  builder[GENERATOR] = self;
+  builder[STYLER] = _styler;
+  builder[IS_EMPTY] = _isEmpty;
+  return builder;
+};
+var applyStyle = (self, string) => {
+  if (self.level <= 0 || !string) {
+    return self[IS_EMPTY] ? "" : string;
+  }
+  let styler = self[STYLER];
+  if (styler === void 0) {
+    return string;
+  }
+  const { openAll, closeAll } = styler;
+  if (string.includes("\x1B")) {
+    while (styler !== void 0) {
+      string = stringReplaceAll(string, styler.close, styler.open);
+      styler = styler.parent;
+    }
+  }
+  const lfIndex = string.indexOf("\n");
+  if (lfIndex !== -1) {
+    string = stringEncaseCRLFWithFirstIndex(string, closeAll, openAll, lfIndex);
+  }
+  return openAll + string + closeAll;
+};
+Object.defineProperties(createChalk.prototype, styles2);
+var chalk = createChalk();
+var chalkStderr = createChalk({ level: stderrColor ? stderrColor.level : 0 });
+var source_default = chalk;
+
 // src/icon-transform/index.ts
 async function run() {
   const filesGlob = getInput("files", true);
   const files = await (0, import_fast_glob.default)(filesGlob);
+  const changedFiles = [];
   let changed = false;
   for (const file of files) {
     if (checkSvg(file)) {
+      console.log(source_default.green(`Updated ${file}`));
+      changedFiles.push(file);
       changed = true;
     }
   }
   if (!changed) {
-    console.log("No files were changed");
+    console.log(source_default.yellow("No files changed"));
     return;
   }
-  setupGit();
   const git = simpleGit();
-  await git.add(filesGlob);
-  git.commit("Updated icons", {
-    "--author": `${getEnv("GITHUB_ACTOR")} <${getEnv(
-      "GITHUB_ACTOR"
-    )}@users.noreply.github.com>`
-  });
-  git.push("origin");
+  console.log("git.status", await git.status());
+  simpleGit().add(filesGlob).commit("Update SVGs", changedFiles);
 }
 function checkSvg(path) {
   if (!path.endsWith(".svg")) {
     return false;
   }
-  const originalFile = import_fs2.default.readFileSync(path, "utf8");
+  const originalFile = import_fs.default.readFileSync(path, "utf8");
   const result = (0, import_svgo.optimize)(originalFile, {
     plugins: [
       "removeDesc",
@@ -70261,7 +70726,7 @@ function checkSvg(path) {
 ${result.data.replace(/>/g, ">\n")}`;
   const fileChanged = afterWithLicense !== originalFile;
   if (fileChanged) {
-    import_fs2.default.writeFileSync(path, afterWithLicense);
+    import_fs.default.writeFileSync(path, afterWithLicense);
   }
   return fileChanged;
 }
