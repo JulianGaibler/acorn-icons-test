@@ -36,16 +36,14 @@ export function getEnv(name: string): string {
 }
 
 export function ensureLicense(input: string): string {
-  // remove all occurrences of the license in the input
-  // the license could be slightly different, so we need to use a regex that matches the start and end
-  // e.g "<!-- This Source Code Form is" and "http://mozilla.org/MPL/2.0/. -->"
+  // remove all occurrences of the license in the input and any whitespace until the next line character
   const regex = new RegExp(
-    `<!-- This Source Code Form is[\\s\\S]*http://mozilla.org/MPL/2.0/. -->${EOL}?`,
+    '<!-- This Source Code Form is[\\s\\S]*?http://mozilla.org/MPL/2.0/. -->\\s*',
     'g',
   )
   const output = input.replace(regex, '')
   // add the license to the top of the file
-  return `${XML_LICENSE}${output}`
+  return `${XML_LICENSE}${EOL}${output}`
 }
 
 export async function tryCatch(fn: Function, errorSummary: string) {

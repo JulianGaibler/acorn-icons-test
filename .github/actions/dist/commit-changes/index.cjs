@@ -8648,7 +8648,7 @@ async function run() {
   const message = getInput("message", true);
   const status = await (0, import_simple_git.simpleGit)().status();
   if (status.files.length === 0) {
-    summary.addHeading(":smile_cat: Did not commit any files", 3);
+    summary.addHeading(":arrow_up: Did not commit any files", 3);
     summary.addRaw(`Did not commit because there were no changed files.`);
     summary.write();
     return;
@@ -8656,7 +8656,7 @@ async function run() {
   await (0, import_simple_git.simpleGit)().add(status.files.map((file) => file.path));
   await setupGit();
   await (0, import_simple_git.simpleGit)().commit(message).push("origin");
-  summary.addHeading(`:smiley_cat: Committed ${status.files.length} files`, 3);
+  summary.addHeading(`:arrow_up: Committed ${status.files.length} files`, 3);
   summary.addList(status.files.map((file) => file.path));
   summary.write();
 }

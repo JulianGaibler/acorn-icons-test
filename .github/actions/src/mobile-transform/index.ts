@@ -27,16 +27,16 @@ async function run() {
   }
 
   if (changedFiles.length === 0) {
-    summary.addHeading(':smile_cat: No files changed', 3)
+    summary.addHeading(`:iphone: No ${fileType.toUpperCase()} files changed`, 3)
     summary.addRaw(
-      `Checked ${files.length} mobile '${fileType}' files and made no changes.`,
+      `Checked ${files.length} ${fileType.toUpperCase()} files and made no changes.`,
     )
     summary.write()
     return
   }
 
   summary.addHeading(
-    `:smiley_cat: Updated ${changedFiles.length} mobile '${fileType}' files`,
+    `:iphone: Updated ${changedFiles.length} mobile ${fileType.toUpperCase()} files`,
     3,
   )
   summary.addList(changedFiles)

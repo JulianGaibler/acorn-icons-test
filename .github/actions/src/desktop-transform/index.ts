@@ -25,14 +25,14 @@ async function run() {
   }
 
   if (changedFiles.length === 0) {
-    summary.addHeading(':smile_cat: No SVGs changed', 3)
+    summary.addHeading(':desktop_computer: No SVGs changed', 3)
     summary.addRaw(`Checked ${files.length} desktop SVGs and made no changes.`)
     summary.write()
     return
   }
 
   summary.addHeading(
-    `:smiley_cat: Updated ${changedFiles.length} desktop SVGs`,
+    `:desktop_computer: Updated ${changedFiles.length} desktop SVGs`,
     3,
   )
   summary.addList(changedFiles)

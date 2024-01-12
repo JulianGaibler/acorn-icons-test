@@ -10,7 +10,7 @@ on:
 jobs:
   checks:
     runs-on: "ubuntu-latest"
-    name: "Format desktop icons"
+    name: "Check and format icons"
     # only run if a file in icons/desktop was modified
     permissions:
       contents: "write"
@@ -42,4 +42,4 @@ jobs:
       - name: Commit changes
         uses: ./.github/actions/dist/commit-changes
         with:
-          message: "Updated mobile icons to match format conventions"
+          message: "Updated icons to match format conventions"

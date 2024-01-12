@@ -14,7 +14,7 @@ async function run() {
   const status = await simpleGit().status()
   // return if there are no changed files
   if (status.files.length === 0) {
-    summary.addHeading(':smile_cat: Did not commit any files', 3)
+    summary.addHeading(':arrow_up: Did not commit any files', 3)
     summary.addRaw(`Did not commit because there were no changed files.`)
     summary.write()
     return
@@ -26,7 +26,7 @@ async function run() {
   // commit and push
   await simpleGit().commit(message).push('origin')
 
-  summary.addHeading(`:smiley_cat: Committed ${status.files.length} files`, 3)
+  summary.addHeading(`:arrow_up: Committed ${status.files.length} files`, 3)
   summary.addList(status.files.map((file) => file.path))
   summary.write()
 }

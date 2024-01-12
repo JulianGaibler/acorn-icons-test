@@ -9588,11 +9588,11 @@ function getEnv(name) {
 }
 function ensureLicense(input) {
   const regex = new RegExp(
-    `<!-- This Source Code Form is[\\s\\S]*http://mozilla.org/MPL/2.0/. -->${import_os2.EOL}?`,
+    "<!-- This Source Code Form is[\\s\\S]*?http://mozilla.org/MPL/2.0/. -->\\s*",
     "g"
   );
   const output = input.replace(regex, "");
-  return `${XML_LICENSE}${output}`;
+  return `${XML_LICENSE}${import_os2.EOL}${output}`;
 }
 async function tryCatch(fn, errorSummary) {
   try {
@@ -9660,15 +9660,15 @@ async function run() {
     }
   }
   if (changedFiles.length === 0) {
-    summary.addHeading(":smile_cat: No files changed", 3);
+    summary.addHeading(`:iphone: No ${fileType.toUpperCase()} files changed`, 3);
     summary.addRaw(
-      `Checked ${files.length} mobile '${fileType}' files and made no changes.`
+      `Checked ${files.length} ${fileType.toUpperCase()} files and made no changes.`
     );
     summary.write();
     return;
   }
   summary.addHeading(
-    `:smiley_cat: Updated ${changedFiles.length} mobile '${fileType}' files`,
+    `:iphone: Updated ${changedFiles.length} mobile ${fileType.toUpperCase()} files`,
     3
   );
   summary.addList(changedFiles);
