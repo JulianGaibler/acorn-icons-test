@@ -46,6 +46,7 @@ export function commitChanges(
   message: string,
   branch: string
 ): void {
+  setupGit()
   // make execSync calls to git
   // git add files
   execSync(`git add ${files.join(' ')}`)
