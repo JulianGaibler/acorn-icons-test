@@ -65337,11 +65337,11 @@ async function setupGit() {
   (0, import_child_process.execSync)('git config --global user.email "actions@github.com"');
   (0, import_child_process.execSync)('git config --global user.name "GitHub Action"');
 }
-async function commitChanges(files, message, branch) {
+async function commitChanges(files, message) {
   await setupGit();
   (0, import_child_process.execSync)(`git add ${files.join(" ")}`);
   (0, import_child_process.execSync)(`git commit -m "${message}"`);
-  (0, import_child_process.execSync)(`git push origin ${branch}`);
+  (0, import_child_process.execSync)(`git push origin`);
 }
 
 // src/icon-transform/index.ts
@@ -65630,7 +65630,7 @@ async function run() {
     summary.write();
     return;
   }
-  await commitChanges(changedFiles, "Update SVGs", "main");
+  await commitChanges(changedFiles, "Update SVGs");
   summary.addHeading(`:smiley_cat: Updated ${changedFiles.length} SVGs`, 3);
   summary.addList(changedFiles);
 }

@@ -46,11 +46,10 @@ export async function setupGit() {
 export async function commitChanges(
   files: string[],
   message: string,
-  branch: string,
 ) {
   await setupGit()
   execSync(`git add ${files.join(' ')}`)
   execSync(`git commit -m "${message}"`)
-  execSync(`git push origin ${branch}`)
+  execSync(`git push origin`)
 }
 
