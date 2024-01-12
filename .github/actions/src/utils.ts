@@ -62,6 +62,6 @@ export async function commitChanges(
 
   execSync(`git add ${files.join(' ')}`)
   execSync(`git commit -m "${message}"`)
-  execSync(`git push origin`)
+  execSync(`git push origin ${process.env.GITHUB_REF}`)
 }
 

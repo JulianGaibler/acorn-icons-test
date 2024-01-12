@@ -65347,7 +65347,7 @@ async function commitChanges(files, message) {
   console.log("GITHUB_REPOSITORY", process.env.GITHUB_REPOSITORY);
   (0, import_child_process.execSync)(`git add ${files.join(" ")}`);
   (0, import_child_process.execSync)(`git commit -m "${message}"`);
-  (0, import_child_process.execSync)(`git push origin`);
+  (0, import_child_process.execSync)(`git push origin ${process.env.GITHUB_REF}`);
 }
 
 // src/icon-transform/index.ts
