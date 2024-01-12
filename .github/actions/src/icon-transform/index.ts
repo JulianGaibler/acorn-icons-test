@@ -26,10 +26,12 @@ async function run() {
 
   console.log(chalk.green('Pushing changes to GitHub'))
 
-  simpleGit()
+  const x = simpleGit()
     .add(filesGlob)
     .commit('Update SVGs', changedFiles)
     .push('origin', 'master')
+
+    console.log('GIT: ', x)
   
   console.log(chalk.green('Done!'))
 }

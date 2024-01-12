@@ -70637,7 +70637,8 @@ async function run() {
     return;
   }
   console.log(source_default.green("Pushing changes to GitHub"));
-  simpleGit().add(filesGlob).commit("Update SVGs", changedFiles).push("origin", "master");
+  const x = simpleGit().add(filesGlob).commit("Update SVGs", changedFiles).push("origin", "master");
+  console.log("GIT: ", x);
   console.log(source_default.green("Done!"));
 }
 function checkSvg(path) {
