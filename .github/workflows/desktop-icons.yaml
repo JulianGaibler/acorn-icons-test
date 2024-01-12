@@ -20,6 +20,6 @@ jobs:
       - name: Check out Git repository
         uses: actions/checkout@v3
       - name: Format desktop icons
-        uses: ./.github/actions/dest/icon-transform
+        uses: ./.github/actions/dist/icon-transform
         with:
           files: "icons/desktop/**"
