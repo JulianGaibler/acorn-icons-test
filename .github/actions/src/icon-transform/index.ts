@@ -2,39 +2,34 @@ import { optimize } from 'svgo'
 import { SVG_LICENSE, commitChanges, getEnv, getInput, setupGit } from '../utils'
 import fg from 'fast-glob'
 import fs from 'fs'
-import { simpleGit } from 'simple-git'
-import chalk from 'chalk'
+import { summary } from '../summary'
 
 async function run() {
   const filesGlob = getInput('files', true)
   const files = await fg(filesGlob)
   const changedFiles = []
 
-  let changed = false
   for (const file of files) {
     if (checkSvg(file)) {
-      console.log(chalk.green(`Updated ${file}`))
       changedFiles.push(file)
-      changed = true
     }
   }
 
-  if (!changed) {
-    console.log(chalk.yellow('No files changed'))
+  if (changedFiles.length === 0) {
+    summary.addHeading(':smile_cat: No SVGs changed', 3)
+    summary.addRaw(`Checked ${files.length} files and made no changes.`)
+    summary.write()
     return
   }
 
-  console.log(chalk.green('Pushing changes to GitHub'))
-
   commitChanges(changedFiles, 'Update SVGs', 'main')
   
-  console.log(chalk.green('Done!'))
+  summary.addHeading(`:smiley_cat: Updated ${changedFiles.length} SVGs`, 3)
+  summary.addList(changedFiles)
 }
 
-// return true if the file was changed
 function checkSvg(path: string): boolean {
-  // first, check if the file is an svg
-  // if not, return false
+
   if (!path.endsWith('.svg')) {
     return false
   }
@@ -124,7 +119,7 @@ function checkSvg(path: string): boolean {
   })
 
   // add line break after each >
-  const afterWithLicense = `${SVG_LICENSE}\n${result.data.replace(/>/g, '>\n')}`
+  const afterWithLicense = `${SVG_LICENSE}\n${result.data.replace(/>/g, '>\n')}\n`
 
   const fileChanged = afterWithLicense !== originalFile
 

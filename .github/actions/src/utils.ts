@@ -1,5 +1,7 @@
 import { execSync } from 'child_process'
-import fs from 'fs'
+import {promises} from 'fs'
+
+const {access, writeFile} = promises
 
 export const SVG_LICENSE = `<!-- This Source Code Form is subject to the terms of the Mozilla Public
 - License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -19,7 +21,7 @@ export function getEnv(name: string): string {
   return process.env[name] || ''
 }
 
-export function setupGit() {
+export async function setupGit() {
   if (!process.env.GITHUB_ACTOR) {
     return
   }
@@ -34,7 +36,7 @@ export function setupGit() {
     password ${process.env.INPUT_GITHUB_TOKEN}
   `
 
-  fs.writeFileSync(`${process.env.HOME}/.netrc`, netrcContent, { mode: 0o600 })
+  await writeFile(`${process.env.HOME}/.netrc`, netrcContent, { mode: 0o600 })
 
   // Configure Git user information
   execSync('git config --global user.email "actions@github.com"')
@@ -44,14 +46,11 @@ export function setupGit() {
 export function commitChanges(
   files: string[],
   message: string,
-  branch: string
-): void {
+  branch: string,
+) {
   setupGit()
-  // make execSync calls to git
-  // git add files
   execSync(`git add ${files.join(' ')}`)
-  // git commit -m message
   execSync(`git commit -m "${message}"`)
-  // git push origin branch
   execSync(`git push origin ${branch}`)
 }
+
