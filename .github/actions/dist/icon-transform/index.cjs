@@ -70636,9 +70636,9 @@ async function run() {
     console.log(source_default.yellow("No files changed"));
     return;
   }
-  const git = simpleGit();
-  console.log("git.status", await git.status());
-  simpleGit().add(filesGlob).commit("Update SVGs", changedFiles);
+  console.log(source_default.green("Pushing changes to GitHub"));
+  simpleGit().add(filesGlob).commit("Update SVGs", changedFiles).push("origin", "master");
+  console.log(source_default.green("Done!"));
 }
 function checkSvg(path) {
   if (!path.endsWith(".svg")) {
