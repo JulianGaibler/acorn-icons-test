@@ -8,10 +8,10 @@ on:
       - "icons/**"
 
 jobs:
-  desktop:
+  checks:
     runs-on: "ubuntu-latest"
     name: "Format desktop icons"
-    if: ${{ contains(github.event.commits.*.modified, 'icons/desktop') }}
+    # only run if a file in icons/desktop was modified
     permissions:
       contents: "write"
     steps:
@@ -22,29 +22,12 @@ jobs:
       - name: Install dependencies
         working-directory: ./.github/actions
         run: npm ci
+      # Desktop icons
       - name: Update desktop icons
         uses: ./.github/actions/dist/desktop-transform
         with:
           files: "icons/desktop/**/*.svg"
-      - name: Commit changes
-        uses: ./.github/actions/dist/commit-changes
-        with:
-          message: "Updated desktop icons to match format conventions"
-  mobile:
-    runs-on: "ubuntu-latest"
-    name: "Format mobile icons"
-    if: ${{ !cancelled() && contains(github.event.commits.*.modified, 'icons/mobile') }}
-    needs: desktop
-    permissions:
-      contents: "write"
-    steps:
-      - name: Check out Git repository
-        uses: actions/checkout@v3
-        with:
-          ref: ${{ github.event.pull_request.head.ref }}
-      - name: Install dependencies
-        working-directory: ./.github/actions
-        run: npm ci
+      # Mobile icons
       - name: Update mobile svg icons
         uses: ./.github/actions/dist/mobile-transform
         with:
@@ -55,6 +38,7 @@ jobs:
         with:
           files: "icons/mobile/**/*.xml"
           file_type: "xml"
+      # Commit changes
       - name: Commit changes
         uses: ./.github/actions/dist/commit-changes
         with:

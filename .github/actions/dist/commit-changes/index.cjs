@@ -8370,7 +8370,9 @@ var Summary = class {
     const overwrite = !!(options == null ? void 0 : options.overwrite);
     const filePath = await this.filePath();
     if (!filePath) {
-      console.log(`~~~ SUMMARY ~~~${import_os.EOL}${this._buffer}${import_os.EOL}~~~ END SUMMARY ~~~`);
+      console.log(
+        `~~~ SUMMARY ~~~${import_os.EOL}${this._buffer}${import_os.EOL}~~~ END SUMMARY ~~~`
+      );
       return this.emptyBuffer();
     }
     const writeFunc = overwrite ? writeFile : appendFile;
