@@ -5,9 +5,7 @@ import prettierXmlPlugin from '@prettier/plugin-xml'
 import { Config, PluginConfig } from 'svgo'
 
 // Mozilla Public License 2.0 header
-export const XML_LICENSE = `<!-- This Source Code Form is subject to the terms of the Mozilla Public
-- License, v. 2.0. If a copy of the MPL was not distributed with this
-- file, You can obtain one at http://mozilla.org/MPL/2.0/. -->`
+export const XML_LICENSE = `<!-- This Source Code Form is subject to the terms of the Mozilla Public${EOL}   - License, v. 2.0. If a copy of the MPL was not distributed with this file,${EOL}   - You can obtain one at http://mozilla.org/MPL/2.0/. -->`
 
 /**
  * Retrieves an input from the environment

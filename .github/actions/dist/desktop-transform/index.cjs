@@ -9576,9 +9576,7 @@ var plugin = {
 var plugin_default = plugin;
 
 // src/utils.ts
-var XML_LICENSE = `<!-- This Source Code Form is subject to the terms of the Mozilla Public
-- License, v. 2.0. If a copy of the MPL was not distributed with this
-- file, You can obtain one at http://mozilla.org/MPL/2.0/. -->`;
+var XML_LICENSE = `<!-- This Source Code Form is subject to the terms of the Mozilla Public${import_os2.EOL}   - License, v. 2.0. If a copy of the MPL was not distributed with this file,${import_os2.EOL}   - You can obtain one at http://mozilla.org/MPL/2.0/. -->`;
 function getInput(name, required = true) {
   const val = getEnv(`INPUT_${name.replace(/ /g, "_").toUpperCase()}`);
   if (required && !val) {
