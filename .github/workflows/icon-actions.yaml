@@ -11,14 +11,17 @@ jobs:
   checks:
     runs-on: "ubuntu-latest"
     name: "Check and format icons"
-    # only run if a file in icons/desktop was modified
+    # Skip if commit message contains "format-skip"
+    if: "!contains(github.event.head_commit.message, 'format-skip')"
     permissions:
       contents: "write"
     steps:
+      # Checkout repository
       - name: Check out Git repository
         uses: actions/checkout@v3
         with:
           ref: ${{ github.event.pull_request.head.ref }}
+      # Install dependencies
       - name: Install dependencies
         working-directory: ./.github/actions
         run: npm ci
