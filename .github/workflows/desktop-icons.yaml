@@ -1,0 +1,25 @@
+name: "Format desktop icons"
+
+on:
+  push:
+    branches:
+      - "main"
+    paths:
+      - "icons/desktop/**"
+  pull_request:
+    branches:
+      - "main"
+    paths:
+      - "icons/desktop/**"
+
+jobs:
+  format:
+    runs-on: "ubuntu-latest"
+    name: "Format desktop icons"
+    steps:
+      - name: Check out Git repository
+        uses: actions/checkout@v3
+      - name: Format desktop icons
+        uses: ./.github/actions/dest/icon-transform
+        with:
+          files: "icons/desktop/**"

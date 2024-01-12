@@ -1,0 +1,12 @@
+{
+  "include": ["src/**/*"],
+  "compilerOptions": {
+    "target": "es2019",
+    "verbatimModuleSyntax": false,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "moduleResolution": "Bundler",
+    "module": "es2015",
+    "types": ["node"]
+  }
+}
