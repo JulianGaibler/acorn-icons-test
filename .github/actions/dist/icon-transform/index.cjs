@@ -59750,7 +59750,7 @@ var require_svgo_node = __commonJS({
   "node_modules/svgo/lib/svgo-node.js"(exports2) {
     "use strict";
     var os = require("os");
-    var fs3 = require("fs");
+    var fs2 = require("fs");
     var { pathToFileURL } = require("url");
     var path = require("path");
     var { optimize: optimizeAgnostic } = require_svgo();
@@ -59769,7 +59769,7 @@ var require_svgo_node = __commonJS({
     };
     var isFile = async (file) => {
       try {
-        const stats = await fs3.promises.stat(file);
+        const stats = await fs2.promises.stat(file);
         return stats.isFile();
       } catch {
         return false;
@@ -61825,7 +61825,7 @@ var require_scan = __commonJS({
 var require_parse5 = __commonJS({
   "node_modules/picomatch/lib/parse.js"(exports2, module2) {
     "use strict";
-    var constants = require_constants2();
+    var constants2 = require_constants2();
     var utils = require_utils7();
     var {
       MAX_LENGTH,
@@ -61833,7 +61833,7 @@ var require_parse5 = __commonJS({
       REGEX_NON_SPECIAL_CHARS,
       REGEX_SPECIAL_CHARS_BACKREF,
       REPLACEMENTS
-    } = constants;
+    } = constants2;
     var expandRange = (args, options) => {
       if (typeof options.expandRange === "function") {
         return options.expandRange(...args, options);
@@ -61865,8 +61865,8 @@ var require_parse5 = __commonJS({
       const tokens = [bos];
       const capture = opts.capture ? "" : "?:";
       const win32 = utils.isWindows(options);
-      const PLATFORM_CHARS = constants.globChars(win32);
-      const EXTGLOB_CHARS = constants.extglobChars(PLATFORM_CHARS);
+      const PLATFORM_CHARS = constants2.globChars(win32);
+      const EXTGLOB_CHARS = constants2.extglobChars(PLATFORM_CHARS);
       const {
         DOT_LITERAL,
         PLUS_LITERAL,
@@ -62548,7 +62548,7 @@ var require_parse5 = __commonJS({
         NO_DOTS_SLASH,
         STAR,
         START_ANCHOR
-      } = constants.globChars(win32);
+      } = constants2.globChars(win32);
       const nodot = opts.dot ? NO_DOTS : NO_DOT;
       const slashDot = opts.dot ? NO_DOTS_SLASH : NO_DOT;
       const capture = opts.capture ? "" : "?:";
@@ -62610,7 +62610,7 @@ var require_picomatch = __commonJS({
     var scan = require_scan();
     var parse2 = require_parse5();
     var utils = require_utils7();
-    var constants = require_constants2();
+    var constants2 = require_constants2();
     var isObject = (val) => val && typeof val === "object" && !Array.isArray(val);
     var picomatch = (glob, options, returnState = false) => {
       if (Array.isArray(glob)) {
@@ -62741,7 +62741,7 @@ var require_picomatch = __commonJS({
         return /$^/;
       }
     };
-    picomatch.constants = constants;
+    picomatch.constants = constants2;
     module2.exports = picomatch;
   }
 });
@@ -63233,8 +63233,8 @@ var require_utils8 = __commonJS({
     exports2.array = array;
     var errno = require_errno();
     exports2.errno = errno;
-    var fs3 = require_fs();
-    exports2.fs = fs3;
+    var fs2 = require_fs();
+    exports2.fs = fs2;
     var path = require_path3();
     exports2.path = path;
     var pattern = require_pattern();
@@ -63418,12 +63418,12 @@ var require_fs2 = __commonJS({
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.createFileSystemAdapter = exports2.FILE_SYSTEM_ADAPTER = void 0;
-    var fs3 = require("fs");
+    var fs2 = require("fs");
     exports2.FILE_SYSTEM_ADAPTER = {
-      lstat: fs3.lstat,
-      stat: fs3.stat,
-      lstatSync: fs3.lstatSync,
-      statSync: fs3.statSync
+      lstat: fs2.lstat,
+      stat: fs2.stat,
+      lstatSync: fs2.lstatSync,
+      statSync: fs2.statSync
     };
     function createFileSystemAdapter(fsMethods) {
       if (fsMethods === void 0) {
@@ -63440,12 +63440,12 @@ var require_settings = __commonJS({
   "node_modules/@nodelib/fs.stat/out/settings.js"(exports2) {
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
-    var fs3 = require_fs2();
+    var fs2 = require_fs2();
     var Settings = class {
       constructor(_options = {}) {
         this._options = _options;
         this.followSymbolicLink = this._getValue(this._options.followSymbolicLink, true);
-        this.fs = fs3.createFileSystemAdapter(this._options.fs);
+        this.fs = fs2.createFileSystemAdapter(this._options.fs);
         this.markSymbolicLink = this._getValue(this._options.markSymbolicLink, false);
         this.throwErrorOnBrokenSymbolicLink = this._getValue(this._options.throwErrorOnBrokenSymbolicLink, true);
       }
@@ -63605,8 +63605,8 @@ var require_utils9 = __commonJS({
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.fs = void 0;
-    var fs3 = require_fs3();
-    exports2.fs = fs3;
+    var fs2 = require_fs3();
+    exports2.fs = fs2;
   }
 });
 
@@ -63801,14 +63801,14 @@ var require_fs4 = __commonJS({
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.createFileSystemAdapter = exports2.FILE_SYSTEM_ADAPTER = void 0;
-    var fs3 = require("fs");
+    var fs2 = require("fs");
     exports2.FILE_SYSTEM_ADAPTER = {
-      lstat: fs3.lstat,
-      stat: fs3.stat,
-      lstatSync: fs3.lstatSync,
-      statSync: fs3.statSync,
-      readdir: fs3.readdir,
-      readdirSync: fs3.readdirSync
+      lstat: fs2.lstat,
+      stat: fs2.stat,
+      lstatSync: fs2.lstatSync,
+      statSync: fs2.statSync,
+      readdir: fs2.readdir,
+      readdirSync: fs2.readdirSync
     };
     function createFileSystemAdapter(fsMethods) {
       if (fsMethods === void 0) {
@@ -63827,12 +63827,12 @@ var require_settings2 = __commonJS({
     Object.defineProperty(exports2, "__esModule", { value: true });
     var path = require("path");
     var fsStat = require_out();
-    var fs3 = require_fs4();
+    var fs2 = require_fs4();
     var Settings = class {
       constructor(_options = {}) {
         this._options = _options;
         this.followSymbolicLinks = this._getValue(this._options.followSymbolicLinks, false);
-        this.fs = fs3.createFileSystemAdapter(this._options.fs);
+        this.fs = fs2.createFileSystemAdapter(this._options.fs);
         this.pathSegmentSeparator = this._getValue(this._options.pathSegmentSeparator, path.sep);
         this.stats = this._getValue(this._options.stats, false);
         this.throwErrorOnBrokenSymbolicLink = this._getValue(this._options.throwErrorOnBrokenSymbolicLink, true);
@@ -65149,16 +65149,16 @@ var require_settings4 = __commonJS({
     "use strict";
     Object.defineProperty(exports2, "__esModule", { value: true });
     exports2.DEFAULT_FILE_SYSTEM_ADAPTER = void 0;
-    var fs3 = require("fs");
+    var fs2 = require("fs");
     var os = require("os");
     var CPU_COUNT = Math.max(os.cpus().length, 1);
     exports2.DEFAULT_FILE_SYSTEM_ADAPTER = {
-      lstat: fs3.lstat,
-      lstatSync: fs3.lstatSync,
-      stat: fs3.stat,
-      statSync: fs3.statSync,
-      readdir: fs3.readdir,
-      readdirSync: fs3.readdirSync
+      lstat: fs2.lstat,
+      lstatSync: fs2.lstatSync,
+      stat: fs2.stat,
+      statSync: fs2.statSync,
+      readdir: fs2.readdir,
+      readdirSync: fs2.readdirSync
     };
     var Settings = class {
       constructor(_options = {}) {
@@ -65309,7 +65309,8 @@ var import_svgo = __toESM(require_svgo_node(), 1);
 
 // src/utils.ts
 var import_child_process = require("child_process");
-var import_fs = __toESM(require("fs"), 1);
+var import_fs = require("fs");
+var { access, writeFile } = import_fs.promises;
 var SVG_LICENSE = `<!-- This Source Code Form is subject to the terms of the Mozilla Public
 - License, v. 2.0. If a copy of the MPL was not distributed with this
 - file, You can obtain one at http://mozilla.org/MPL/2.0/. -->`;
@@ -65320,7 +65321,7 @@ function getInput(name, required = true) {
   }
   return val.trim();
 }
-function setupGit() {
+async function setupGit() {
   if (!process.env.GITHUB_ACTOR) {
     return;
   }
@@ -65332,14 +65333,12 @@ function setupGit() {
     login ${process.env.GITHUB_ACTOR}
     password ${process.env.INPUT_GITHUB_TOKEN}
   `;
-  import_fs.default.writeFileSync(`${process.env.HOME}/.netrc`, netrcContent, { mode: 384 });
+  await writeFile(`${process.env.HOME}/.netrc`, netrcContent, { mode: 384 });
   (0, import_child_process.execSync)('git config --global user.email "actions@github.com"');
   (0, import_child_process.execSync)('git config --global user.name "GitHub Action"');
 }
 function commitChanges(files, message, branch) {
   setupGit();
-  console.log("dd", (0, import_child_process.execSync)(`git status`).toString());
-  return;
   (0, import_child_process.execSync)(`git add ${files.join(" ")}`);
   (0, import_child_process.execSync)(`git commit -m "${message}"`);
   (0, import_child_process.execSync)(`git push origin ${branch}`);
@@ -65347,7 +65346,275 @@ function commitChanges(files, message, branch) {
 
 // src/icon-transform/index.ts
 var import_fast_glob = __toESM(require_out4(), 1);
-var import_fs2 = __toESM(require("fs"), 1);
+var import_fs3 = __toESM(require("fs"), 1);
+
+// src/summary.ts
+var import_os = require("os");
+var import_fs2 = require("fs");
+var { access: access2, appendFile, writeFile: writeFile2 } = import_fs2.promises;
+var SUMMARY_ENV_VAR = "GITHUB_STEP_SUMMARY";
+var Summary = class {
+  constructor() {
+    this._buffer = "";
+  }
+  /**
+   * Finds the summary file path from the environment, rejects if env var is not found or file does not exist
+   * Also checks r/w permissions.
+   *
+   * @returns step summary file path
+   */
+  async filePath() {
+    if (this._filePath) {
+      return this._filePath;
+    }
+    const pathFromEnv = process.env[SUMMARY_ENV_VAR];
+    if (!pathFromEnv) {
+      throw new Error(
+        `Unable to find environment variable for $${SUMMARY_ENV_VAR}. Check if your runtime environment supports job summaries.`
+      );
+    }
+    try {
+      await access2(pathFromEnv, import_fs2.constants.R_OK | import_fs2.constants.W_OK);
+    } catch {
+      throw new Error(
+        `Unable to access summary file: '${pathFromEnv}'. Check if the file has correct read/write permissions.`
+      );
+    }
+    this._filePath = pathFromEnv;
+    return this._filePath;
+  }
+  /**
+   * Wraps content in an HTML tag, adding any HTML attributes
+   *
+   * @param {string} tag HTML tag to wrap
+   * @param {string | null} content content within the tag
+   * @param {[attribute: string]: string} attrs key-value list of HTML attributes to add
+   *
+   * @returns {string} content wrapped in HTML element
+   */
+  wrap(tag, content, attrs = {}) {
+    const htmlAttrs = Object.entries(attrs).map(([key, value]) => ` ${key}="${value}"`).join("");
+    if (!content) {
+      return `<${tag}${htmlAttrs}>`;
+    }
+    return `<${tag}${htmlAttrs}>${content}</${tag}>`;
+  }
+  /**
+   * Writes text in the buffer to the summary buffer file and empties buffer. Will append by default.
+   *
+   * @param {SummaryWriteOptions} [options] (optional) options for write operation
+   *
+   * @returns {Promise<Summary>} summary instance
+   */
+  async write(options) {
+    const overwrite = !!(options == null ? void 0 : options.overwrite);
+    const filePath = await this.filePath();
+    const writeFunc = overwrite ? writeFile2 : appendFile;
+    await writeFunc(filePath, this._buffer, { encoding: "utf8" });
+    return this.emptyBuffer();
+  }
+  /**
+   * Clears the summary buffer and wipes the summary file
+   *
+   * @returns {Summary} summary instance
+   */
+  async clear() {
+    return this.emptyBuffer().write({ overwrite: true });
+  }
+  /**
+   * Returns the current summary buffer as a string
+   *
+   * @returns {string} string of summary buffer
+   */
+  stringify() {
+    return this._buffer;
+  }
+  /**
+   * If the summary buffer is empty
+   *
+   * @returns {boolen} true if the buffer is empty
+   */
+  isEmptyBuffer() {
+    return this._buffer.length === 0;
+  }
+  /**
+   * Resets the summary buffer without writing to summary file
+   *
+   * @returns {Summary} summary instance
+   */
+  emptyBuffer() {
+    this._buffer = "";
+    return this;
+  }
+  /**
+   * Adds raw text to the summary buffer
+   *
+   * @param {string} text content to add
+   * @param {boolean} [addEOL=false] (optional) append an EOL to the raw text (default: false)
+   *
+   * @returns {Summary} summary instance
+   */
+  addRaw(text, addEOL = false) {
+    this._buffer += text;
+    return addEOL ? this.addEOL() : this;
+  }
+  /**
+   * Adds the operating system-specific end-of-line marker to the buffer
+   *
+   * @returns {Summary} summary instance
+   */
+  addEOL() {
+    return this.addRaw(import_os.EOL);
+  }
+  /**
+   * Adds an HTML codeblock to the summary buffer
+   *
+   * @param {string} code content to render within fenced code block
+   * @param {string} lang (optional) language to syntax highlight code
+   *
+   * @returns {Summary} summary instance
+   */
+  addCodeBlock(code, lang) {
+    const attrs = {
+      ...lang && { lang }
+    };
+    const element = this.wrap("pre", this.wrap("code", code), attrs);
+    return this.addRaw(element).addEOL();
+  }
+  /**
+   * Adds an HTML list to the summary buffer
+   *
+   * @param {string[]} items list of items to render
+   * @param {boolean} [ordered=false] (optional) if the rendered list should be ordered or not (default: false)
+   *
+   * @returns {Summary} summary instance
+   */
+  addList(items, ordered = false) {
+    const tag = ordered ? "ol" : "ul";
+    const listItems = items.map((item) => this.wrap("li", item)).join("");
+    const element = this.wrap(tag, listItems);
+    return this.addRaw(element).addEOL();
+  }
+  /**
+   * Adds an HTML table to the summary buffer
+   *
+   * @param {SummaryTableCell[]} rows table rows
+   *
+   * @returns {Summary} summary instance
+   */
+  addTable(rows) {
+    const tableBody = rows.map((row) => {
+      const cells = row.map((cell) => {
+        if (typeof cell === "string") {
+          return this.wrap("td", cell);
+        }
+        const { header, data, colspan, rowspan } = cell;
+        const tag = header ? "th" : "td";
+        const attrs = {
+          ...colspan && { colspan },
+          ...rowspan && { rowspan }
+        };
+        return this.wrap(tag, data, attrs);
+      }).join("");
+      return this.wrap("tr", cells);
+    }).join("");
+    const element = this.wrap("table", tableBody);
+    return this.addRaw(element).addEOL();
+  }
+  /**
+   * Adds a collapsable HTML details element to the summary buffer
+   *
+   * @param {string} label text for the closed state
+   * @param {string} content collapsable content
+   *
+   * @returns {Summary} summary instance
+   */
+  addDetails(label, content) {
+    const element = this.wrap("details", this.wrap("summary", label) + content);
+    return this.addRaw(element).addEOL();
+  }
+  /**
+   * Adds an HTML image tag to the summary buffer
+   *
+   * @param {string} src path to the image you to embed
+   * @param {string} alt text description of the image
+   * @param {SummaryImageOptions} options (optional) addition image attributes
+   *
+   * @returns {Summary} summary instance
+   */
+  addImage(src, alt, options) {
+    const { width, height } = options || {};
+    const attrs = {
+      ...width && { width },
+      ...height && { height }
+    };
+    const element = this.wrap("img", null, { src, alt, ...attrs });
+    return this.addRaw(element).addEOL();
+  }
+  /**
+   * Adds an HTML section heading element
+   *
+   * @param {string} text heading text
+   * @param {number | string} [level=1] (optional) the heading level, default: 1
+   *
+   * @returns {Summary} summary instance
+   */
+  addHeading(text, level) {
+    const tag = `h${level}`;
+    const allowedTag = ["h1", "h2", "h3", "h4", "h5", "h6"].includes(tag) ? tag : "h1";
+    const element = this.wrap(allowedTag, text);
+    return this.addRaw(element).addEOL();
+  }
+  /**
+   * Adds an HTML thematic break (<hr>) to the summary buffer
+   *
+   * @returns {Summary} summary instance
+   */
+  addSeparator() {
+    const element = this.wrap("hr", null);
+    return this.addRaw(element).addEOL();
+  }
+  /**
+   * Adds an HTML line break (<br>) to the summary buffer
+   *
+   * @returns {Summary} summary instance
+   */
+  addBreak() {
+    const element = this.wrap("br", null);
+    return this.addRaw(element).addEOL();
+  }
+  /**
+   * Adds an HTML blockquote to the summary buffer
+   *
+   * @param {string} text quote text
+   * @param {string} cite (optional) citation url
+   *
+   * @returns {Summary} summary instance
+   */
+  addQuote(text, cite) {
+    const attrs = {
+      ...cite && { cite }
+    };
+    const element = this.wrap("blockquote", text, attrs);
+    return this.addRaw(element).addEOL();
+  }
+  /**
+   * Adds an HTML anchor tag to the summary buffer
+   *
+   * @param {string} text link text/content
+   * @param {string} href hyperlink
+   *
+   * @returns {Summary} summary instance
+   */
+  addLink(text, href) {
+    const element = this.wrap("a", text, { href });
+    return this.addRaw(element).addEOL();
+  }
+};
+var _summary = new Summary();
+var summary = _summary;
+
+// src/icon-transform/index.ts
 async function run() {
   const filesGlob = getInput("files", true);
   const files = await (0, import_fast_glob.default)(filesGlob);
@@ -65358,15 +65625,20 @@ async function run() {
     }
   }
   if (changedFiles.length === 0) {
+    summary.addHeading(":smile_cat: No SVGs changed", 3);
+    summary.addRaw(`Checked ${files.length} files and made no changes.`);
+    summary.write();
     return;
   }
   commitChanges(changedFiles, "Update SVGs", "main");
+  summary.addHeading(`:smiley_cat: Updated ${changedFiles.length} SVGs`, 3);
+  summary.addList(changedFiles);
 }
 function checkSvg(path) {
   if (!path.endsWith(".svg")) {
     return false;
   }
-  const originalFile = import_fs2.default.readFileSync(path, "utf8");
+  const originalFile = import_fs3.default.readFileSync(path, "utf8");
   const result = (0, import_svgo.optimize)(originalFile, {
     plugins: [
       "removeDesc",
@@ -65449,7 +65721,7 @@ ${result.data.replace(/>/g, ">\n")}
 `;
   const fileChanged = afterWithLicense !== originalFile;
   if (fileChanged) {
-    import_fs2.default.writeFileSync(path, afterWithLicense);
+    import_fs3.default.writeFileSync(path, afterWithLicense);
   }
   return fileChanged;
 }

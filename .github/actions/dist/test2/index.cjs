@@ -65308,6 +65308,8 @@ var require_out4 = __commonJS({
 var import_svgo = __toESM(require_svgo_node(), 1);
 
 // src/utils.ts
+var import_fs = require("fs");
+var { access, writeFile } = import_fs.promises;
 function getInput(name, required = true) {
   const val = process.env[`INPUT_${name.replace(/ /g, "_").toUpperCase()}`] || "";
   if (required && !val) {
