@@ -8622,7 +8622,7 @@ var {
 var { fill, group: group2, hardline: hardline2, indent: indent3, join: join2, line: line2, literalline: literalline2, softline: softline2 } = doc2.builders;
 
 // src/utils.ts
-var XML_LICENSE = `<!-- This Source Code Form is subject to the terms of the Mozilla Public${import_os2.EOL}   - License, v. 2.0. If a copy of the MPL was not distributed with this file,${import_os2.EOL}   - You can obtain one at http://mozilla.org/MPL/2.0/. -->`;
+var XML_LICENSE = `<!-- This Source Code Form is subject to the terms of the Mozilla Public${import_os2.EOL}   - License, v. 2.0. If a copy of the MPL was not distributed with this${import_os2.EOL}   - file, You can obtain one at http://mozilla.org/MPL/2.0/. -->`;
 function getInput(name, required = true) {
   const val = getEnv(`INPUT_${name.replace(/ /g, "_").toUpperCase()}`);
   if (required && !val) {
