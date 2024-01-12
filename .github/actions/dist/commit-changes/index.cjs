@@ -8639,6 +8639,7 @@ async function tryCatch(fn, errorSummary) {
 }
 
 // src/commit-changes/index.ts
+var import_child_process = require("child_process");
 var { writeFile: writeFile2 } = import_fs2.promises;
 tryCatch(run, "Failed to commit changes. See logs for details.");
 async function run() {
@@ -8669,5 +8670,6 @@ async function setupGit() {
     password ${process.env.INPUT_GITHUB_TOKEN}
   `;
   await writeFile2(`${process.env.HOME}/.netrc`, netrcContent, { mode: 384 });
-  (0, import_simple_git.simpleGit)().raw(["config", "--global", "user.email", '"actions@github.com"']).raw(["config", "--global", "user.name", '"GitHub Action"']);
+  (0, import_child_process.execSync)('git config --global user.email "actions@github.com"');
+  (0, import_child_process.execSync)('git config --global user.name "GitHub Action"');
 }
