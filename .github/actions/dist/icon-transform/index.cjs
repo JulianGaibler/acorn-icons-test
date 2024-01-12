@@ -65718,8 +65718,7 @@ function checkSvg(path) {
     ]
   });
   const afterWithLicense = `${SVG_LICENSE}
-${result.data.replace(/>/g, ">\n")}
-`;
+${result.data.replace(/>/g, ">\n")}`;
   const fileChanged = afterWithLicense !== originalFile;
   if (fileChanged) {
     import_fs3.default.writeFileSync(path, afterWithLicense);

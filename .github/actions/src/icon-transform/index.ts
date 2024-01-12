@@ -120,7 +120,7 @@ function checkSvg(path: string): boolean {
   })
 
   // add line break after each >
-  const afterWithLicense = `${SVG_LICENSE}\n${result.data.replace(/>/g, '>\n')}\n`
+  const afterWithLicense = `${SVG_LICENSE}\n${result.data.replace(/>/g, '>\n')}`
 
   const fileChanged = afterWithLicense !== originalFile
 
