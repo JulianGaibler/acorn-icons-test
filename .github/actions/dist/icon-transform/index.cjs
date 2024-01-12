@@ -65339,15 +65339,9 @@ async function setupGit() {
 }
 async function commitChanges(files, message) {
   await setupGit();
-  const x = (0, import_child_process.execSync)("git branch -a");
-  console.log(x.toString());
-  console.log("GITHUB_REF", process.env.GITHUB_REF);
-  console.log("GITHUB_HEAD_REF", process.env.GITHUB_HEAD_REF);
-  console.log("GITHUB_BASE_REF", process.env.GITHUB_BASE_REF);
-  console.log("GITHUB_REPOSITORY", process.env.GITHUB_REPOSITORY);
   (0, import_child_process.execSync)(`git add ${files.join(" ")}`);
   (0, import_child_process.execSync)(`git commit -m "${message}"`);
-  (0, import_child_process.execSync)(`git push origin ${"remotes/pull/1/merge"}`);
+  (0, import_child_process.execSync)(`git push origin`);
 }
 
 // src/icon-transform/index.ts
@@ -65639,6 +65633,7 @@ async function run() {
   await commitChanges(changedFiles, "Update SVGs");
   summary.addHeading(`:smiley_cat: Updated ${changedFiles.length} SVGs`, 3);
   summary.addList(changedFiles);
+  summary.write();
 }
 function checkSvg(path) {
   if (!path.endsWith(".svg")) {

@@ -49,19 +49,8 @@ export async function commitChanges(
 ) {
   await setupGit()
 
-  // print all branches to the console
-  const x = execSync('git branch -a')
-  console.log(x.toString())
-
-  // print github env variables
-  console.log('GITHUB_REF', process.env.GITHUB_REF)
-  console.log('GITHUB_HEAD_REF', process.env.GITHUB_HEAD_REF)
-  console.log('GITHUB_BASE_REF', process.env.GITHUB_BASE_REF)
-  console.log('GITHUB_REPOSITORY', process.env.GITHUB_REPOSITORY)
-
-
   execSync(`git add ${files.join(' ')}`)
   execSync(`git commit -m "${message}"`)
-  execSync(`git push origin ${"remotes/pull/1/merge"}`)
+  execSync(`git push origin`)
 }
 

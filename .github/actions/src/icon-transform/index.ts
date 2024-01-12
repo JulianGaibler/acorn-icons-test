@@ -26,6 +26,7 @@ async function run() {
   
   summary.addHeading(`:smiley_cat: Updated ${changedFiles.length} SVGs`, 3)
   summary.addList(changedFiles)
+  summary.write()
 }
 
 function checkSvg(path: string): boolean {
