@@ -71,7 +71,6 @@ export async function formatFile(type: FormattableFile, content: string) {
     tabWidth: 4,
     printWidth: type === 'svg' ? 100000 : 80,
     singleAttributePerLine: false,
-    bracketSameLine: true,
   })
 
   return formatted

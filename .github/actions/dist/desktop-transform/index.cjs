@@ -9616,8 +9616,7 @@ async function formatFile(type, content) {
     // use 4 spaces for indentation
     tabWidth: 4,
     printWidth: type === "svg" ? 1e5 : 80,
-    singleAttributePerLine: false,
-    bracketSameLine: true
+    singleAttributePerLine: false
   });
   return formatted;
 }
