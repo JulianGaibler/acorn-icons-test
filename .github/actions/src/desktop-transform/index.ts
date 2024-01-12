@@ -1,36 +1,45 @@
 import { optimize } from 'svgo'
-import { SVG_LICENSE, commitChanges, getEnv, getInput, setupGit } from '../utils'
+import {
+  ensureLicense,
+  formatFile,
+  getInput,
+  svgoBasePlugins,
+  svgoRemoveAttrs,
+  tryCatch,
+} from '../utils'
 import fg from 'fast-glob'
 import fs from 'fs'
 import { summary } from '../summary'
 
+tryCatch(run, 'Failed to check desktop SVGs. See logs for details.')
+
 async function run() {
   const filesGlob = getInput('files', true)
   const files = await fg(filesGlob)
-  const changedFiles = []
+  const changedFiles: string[] = []
 
   for (const file of files) {
-    if (checkSvg(file)) {
+    if (await checkSvg(file)) {
       changedFiles.push(file)
     }
   }
 
   if (changedFiles.length === 0) {
     summary.addHeading(':smile_cat: No SVGs changed', 3)
-    summary.addRaw(`Checked ${files.length} files and made no changes.`)
+    summary.addRaw(`Checked ${files.length} desktop SVGs and made no changes.`)
     summary.write()
     return
   }
 
-  await commitChanges(changedFiles, 'Update SVGs')
-  
-  summary.addHeading(`:smiley_cat: Updated ${changedFiles.length} SVGs`, 3)
+  summary.addHeading(
+    `:smiley_cat: Updated ${changedFiles.length} desktop SVGs`,
+    3,
+  )
   summary.addList(changedFiles)
   summary.write()
 }
 
-function checkSvg(path: string): boolean {
-
+async function checkSvg(path: string): Promise<boolean> {
   if (!path.endsWith('.svg')) {
     return false
   }
@@ -39,25 +48,19 @@ function checkSvg(path: string): boolean {
 
   const result = optimize(originalFile, {
     plugins: [
-      'removeDesc',
-      'removeStyleElement',
-      'removeOffCanvasPaths',
-      'removeNonInheritableGroupAttrs',
-      {
-        name: 'preset-default',
-        params: {
-          overrides: {
-            removeViewBox: false,
-          },
-        },
-      },
-      {
-        name: 'removeAttrs',
-        params: {
-          attrs:
-            '(id|data-name|class|fill|stroke|stroke-width|stroke-miterlimit|clip-rule|fill-rule)',
-        },
-      },
+      ...svgoBasePlugins,
+      svgoRemoveAttrs([
+        'id',
+        'data-name',
+        'class',
+        'fill',
+        'stroke',
+        'stroke-width',
+        'stroke-miterlimit',
+        'clip-rule',
+        'fill-rule',
+        'fill-opacity',
+      ]),
       {
         name: 'viewBoxAndDimensions',
         fn: () => ({
@@ -119,15 +122,12 @@ function checkSvg(path: string): boolean {
     ],
   })
 
-  // add line break after each >
-  const afterWithLicense = `${SVG_LICENSE}\n${result.data.replace(/>/g, '>\n')}`
+  const formatted = await formatFile('svg', result.data)
+  const withLicense = ensureLicense(formatted)
 
-  const fileChanged = afterWithLicense !== originalFile
-
+  const fileChanged = withLicense !== originalFile
   if (fileChanged) {
-    fs.writeFileSync(path, afterWithLicense)
+    fs.writeFileSync(path, withLicense)
   }
   return fileChanged
 }
-
-run()

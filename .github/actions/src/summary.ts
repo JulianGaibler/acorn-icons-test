@@ -75,7 +75,7 @@ export interface SummaryWriteOptions {
 
 class Summary {
   private _buffer: string
-  private _filePath?: string
+  private _filePath?: string | null
 
   constructor() {
     this._buffer = ''
@@ -87,16 +87,15 @@ class Summary {
    *
    * @returns step summary file path
    */
-  private async filePath(): Promise<string> {
+  private async filePath(): Promise<string | null> {
     if (this._filePath) {
       return this._filePath
     }
 
     const pathFromEnv = process.env[SUMMARY_ENV_VAR]
     if (!pathFromEnv) {
-      throw new Error(
-        `Unable to find environment variable for $${SUMMARY_ENV_VAR}. Check if your runtime environment supports job summaries.`,
-      )
+      this._filePath = null
+      return this._filePath
     }
 
     try {
@@ -146,6 +145,13 @@ class Summary {
   async write(options?: SummaryWriteOptions): Promise<Summary> {
     const overwrite = !!options?.overwrite
     const filePath = await this.filePath()
+
+    // if there is no file path, print to console
+    if (!filePath) {
+      console.log(`~~~ SUMMARY ~~~${EOL}${this._buffer}${EOL}~~~ END SUMMARY ~~~`)
+      return this.emptyBuffer()
+    }
+
     const writeFunc = overwrite ? writeFile : appendFile
     await writeFunc(filePath, this._buffer, { encoding: 'utf8' })
     return this.emptyBuffer()
@@ -373,6 +379,26 @@ class Summary {
   addLink(text: string, href: string): Summary {
     const element = this.wrap('a', text, { href })
     return this.addRaw(element).addEOL()
+  }
+
+  /**
+   * Adds a blockquote alert to the summary buffer
+   *
+   * @param {string} type type of alert
+   * @param {string} text alert text
+   *
+   * @returns {Summary} summary instance
+   */
+  addAlert(
+    type: 'note' | 'tip' | 'important' | 'warning' | 'caution',
+    text: string,
+  ): Summary {
+    const element = text
+      .split(EOL)
+      .map((line) => `> ${line}`)
+      .join(EOL)
+    const alert = `> [!${type.toUpperCase()}]${EOL}${element}`
+    return this.addRaw(alert).addEOL()
   }
 }
 
