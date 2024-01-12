@@ -22,10 +22,11 @@ async function run() {
     return
   }
 
-  commitChanges(changedFiles, 'Update SVGs', 'main')
+  await commitChanges(changedFiles, 'Update SVGs')
   
   summary.addHeading(`:smiley_cat: Updated ${changedFiles.length} SVGs`, 3)
   summary.addList(changedFiles)
+  summary.write()
 }
 
 function checkSvg(path: string): boolean {
