@@ -65337,11 +65337,17 @@ async function setupGit() {
   (0, import_child_process.execSync)('git config --global user.email "actions@github.com"');
   (0, import_child_process.execSync)('git config --global user.name "GitHub Action"');
 }
-function commitChanges(files, message, branch) {
-  setupGit();
+async function commitChanges(files, message) {
+  await setupGit();
+  const x = (0, import_child_process.execSync)("git branch -a");
+  console.log(x.toString());
+  console.log("GITHUB_REF", process.env.GITHUB_REF);
+  console.log("GITHUB_HEAD_REF", process.env.GITHUB_HEAD_REF);
+  console.log("GITHUB_BASE_REF", process.env.GITHUB_BASE_REF);
+  console.log("GITHUB_REPOSITORY", process.env.GITHUB_REPOSITORY);
   (0, import_child_process.execSync)(`git add ${files.join(" ")}`);
   (0, import_child_process.execSync)(`git commit -m "${message}"`);
-  (0, import_child_process.execSync)(`git push origin ${branch}`);
+  (0, import_child_process.execSync)(`git push origin ${"remotes/pull/1/merge"}`);
 }
 
 // src/icon-transform/index.ts
@@ -65630,7 +65636,7 @@ async function run() {
     summary.write();
     return;
   }
-  commitChanges(changedFiles, "Update SVGs", "main");
+  await commitChanges(changedFiles, "Update SVGs");
   summary.addHeading(`:smiley_cat: Updated ${changedFiles.length} SVGs`, 3);
   summary.addList(changedFiles);
 }
