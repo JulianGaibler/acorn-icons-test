@@ -65337,8 +65337,8 @@ async function setupGit() {
   (0, import_child_process.execSync)('git config --global user.email "actions@github.com"');
   (0, import_child_process.execSync)('git config --global user.name "GitHub Action"');
 }
-function commitChanges(files, message, branch) {
-  setupGit();
+async function commitChanges(files, message, branch) {
+  await setupGit();
   (0, import_child_process.execSync)(`git add ${files.join(" ")}`);
   (0, import_child_process.execSync)(`git commit -m "${message}"`);
   (0, import_child_process.execSync)(`git push origin ${branch}`);
@@ -65630,7 +65630,7 @@ async function run() {
     summary.write();
     return;
   }
-  commitChanges(changedFiles, "Update SVGs", "main");
+  await commitChanges(changedFiles, "Update SVGs", "main");
   summary.addHeading(`:smiley_cat: Updated ${changedFiles.length} SVGs`, 3);
   summary.addList(changedFiles);
 }

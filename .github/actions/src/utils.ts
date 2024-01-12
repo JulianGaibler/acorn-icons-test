@@ -43,12 +43,12 @@ export async function setupGit() {
   execSync('git config --global user.name "GitHub Action"')
 }
 
-export function commitChanges(
+export async function commitChanges(
   files: string[],
   message: string,
   branch: string,
 ) {
-  setupGit()
+  await setupGit()
   execSync(`git add ${files.join(' ')}`)
   execSync(`git commit -m "${message}"`)
   execSync(`git push origin ${branch}`)
