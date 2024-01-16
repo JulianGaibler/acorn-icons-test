@@ -45,5 +45,3 @@ jobs:
       # Commit changes
       - name: Commit changes
         uses: ./.github/actions/dist/commit-changes
-        with:
-          message: "Updated icons to match format conventions"

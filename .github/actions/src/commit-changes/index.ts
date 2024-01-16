@@ -2,17 +2,17 @@ import { promises } from 'fs'
 import { execSync } from 'child_process'
 import { simpleGit } from 'simple-git'
 import { summary } from '../summary'
-import { getInput, tryCatch } from '../utils'
+import { tryCatch } from '../utils'
 
 const { writeFile } = promises
+const COMMIT_MESSAGE = 'Updated icons to match format conventions'
 
 tryCatch(run, 'Failed to commit changes. See logs for details.')
 
 async function run() {
-  // get commit message from environment
-  const message = getInput('message', true)
   // get all changed files from git
   const status = await simpleGit().status()
+
   // if there are no changed files, exit
   if (status.files.length === 0) {
     summary.addHeading(':arrow_up: Did not commit any files', 3)
@@ -20,12 +20,15 @@ async function run() {
     summary.write()
     return
   }
+
   // since there are changed files, add them to staging
   await simpleGit().add(status.files.map((file) => file.path))
+
   // now we need to setup git credentials
   await setupGit()
+
   // commit and push
-  await simpleGit().commit(message).push('origin')
+  await simpleGit().commit(COMMIT_MESSAGE).push('origin')
 
   // Add commit summary
   summary.addHeading(`:arrow_up: Committed ${status.files.length} files`, 3)

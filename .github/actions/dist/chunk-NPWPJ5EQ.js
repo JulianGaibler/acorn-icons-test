@@ -1,4 +1,3 @@
-"use strict";
 var __create = Object.create;
 var __defProp = Object.defineProperty;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -438,13 +437,13 @@ var init_utils = __esm({
 
 // node_modules/regexp-to-ast/lib/regexp-to-ast.js
 var require_regexp_to_ast = __commonJS({
-  "node_modules/regexp-to-ast/lib/regexp-to-ast.js"(exports2, module2) {
+  "node_modules/regexp-to-ast/lib/regexp-to-ast.js"(exports, module) {
     "use strict";
     (function(root, factory) {
       if (typeof define === "function" && define.amd) {
         define([], factory);
-      } else if (typeof module2 === "object" && module2.exports) {
-        module2.exports = factory();
+      } else if (typeof module === "object" && module.exports) {
+        module.exports = factory();
       } else {
         root.regexpToAst = factory();
       }
@@ -452,7 +451,7 @@ var require_regexp_to_ast = __commonJS({
       typeof self !== "undefined" ? (
         // istanbul ignore next
         self
-      ) : exports2,
+      ) : exports,
       function() {
         function RegExpParser2() {
         }
@@ -7942,7 +7941,7 @@ var init_api = __esm({
 
 // node_modules/@xml-tools/parser/lib/lexer.js
 var require_lexer = __commonJS({
-  "node_modules/@xml-tools/parser/lib/lexer.js"(exports2, module2) {
+  "node_modules/@xml-tools/parser/lib/lexer.js"(exports, module) {
     "use strict";
     var { createToken: createTokenOrg, Lexer: Lexer2 } = (init_api(), __toCommonJS(api_exports));
     var fragments = {};
@@ -8104,7 +8103,7 @@ var require_lexer = __commonJS({
       lineTerminatorCharacters: ["\n"],
       lineTerminatorsPattern: /\n|\r\n/g
     });
-    module2.exports = {
+    module.exports = {
       xmlLexer,
       tokensDictionary
     };
@@ -8113,7 +8112,7 @@ var require_lexer = __commonJS({
 
 // node_modules/@xml-tools/parser/lib/parser.js
 var require_parser = __commonJS({
-  "node_modules/@xml-tools/parser/lib/parser.js"(exports2, module2) {
+  "node_modules/@xml-tools/parser/lib/parser.js"(exports, module) {
     "use strict";
     var { CstParser: CstParser2, tokenMatcher: tokenMatcher2 } = (init_api(), __toCommonJS(api_exports));
     var { tokensDictionary: t } = require_lexer();
@@ -8276,7 +8275,7 @@ var require_parser = __commonJS({
       }
     };
     var xmlParser = new Parser3();
-    module2.exports = {
+    module.exports = {
       xmlParser
     };
   }
@@ -8284,11 +8283,11 @@ var require_parser = __commonJS({
 
 // node_modules/@xml-tools/parser/lib/api.js
 var require_api = __commonJS({
-  "node_modules/@xml-tools/parser/lib/api.js"(exports2, module2) {
+  "node_modules/@xml-tools/parser/lib/api.js"(exports, module) {
     "use strict";
     var { xmlLexer } = require_lexer();
     var { xmlParser } = require_parser();
-    module2.exports = {
+    module.exports = {
       parse: function parse(text) {
         const lexResult = xmlLexer.tokenize(text);
         xmlParser.input = lexResult.tokens;
@@ -8305,15 +8304,10 @@ var require_api = __commonJS({
   }
 });
 
-// src/commit-changes/index.ts
-var import_fs2 = require("fs");
-var import_child_process = require("child_process");
-var import_simple_git = require("simple-git");
-
 // src/summary.ts
-var import_os = require("os");
-var import_fs = require("fs");
-var { access, appendFile, writeFile } = import_fs.promises;
+import { EOL } from "os";
+import { constants, promises } from "fs";
+var { access, appendFile, writeFile } = promises;
 var SUMMARY_ENV_VAR = "GITHUB_STEP_SUMMARY";
 var Summary = class {
   constructor() {
@@ -8335,7 +8329,7 @@ var Summary = class {
       return this._filePath;
     }
     try {
-      await access(pathFromEnv, import_fs.constants.R_OK | import_fs.constants.W_OK);
+      await access(pathFromEnv, constants.R_OK | constants.W_OK);
     } catch {
       throw new Error(
         `Unable to access summary file: '${pathFromEnv}'. Check if the file has correct read/write permissions.`
@@ -8372,7 +8366,7 @@ var Summary = class {
     const filePath = await this.filePath();
     if (!filePath) {
       console.log(
-        `~~~ SUMMARY ~~~${import_os.EOL}${this._buffer}${import_os.EOL}~~~ END SUMMARY ~~~`
+        `~~~ SUMMARY ~~~${EOL}${this._buffer}${EOL}~~~ END SUMMARY ~~~`
       );
       return this.emptyBuffer();
     }
@@ -8431,7 +8425,7 @@ var Summary = class {
    * @returns {Summary} summary instance
    */
   addEOL() {
-    return this.addRaw(import_os.EOL);
+    return this.addRaw(EOL);
   }
   /**
    * Adds an HTML codeblock to the summary buffer
@@ -8586,8 +8580,8 @@ var Summary = class {
    * @returns {Summary} summary instance
    */
   addAlert(type, text) {
-    const element = text.split(import_os.EOL).map((line3) => `> ${line3}`).join(import_os.EOL);
-    const alert = `> [!${type.toUpperCase()}]${import_os.EOL}${element}`;
+    const element = text.split(EOL).map((line3) => `> ${line3}`).join(EOL);
+    const alert = `> [!${type.toUpperCase()}]${EOL}${element}`;
     return this.addRaw(alert).addEOL();
   }
 };
@@ -8595,17 +8589,354 @@ var _summary = new Summary();
 var summary = _summary;
 
 // src/utils.ts
-var import_os2 = require("os");
-var import_prettier = __toESM(require("prettier"), 1);
+import { EOL as EOL2 } from "os";
+import prettier from "prettier";
+
+// node_modules/@prettier/plugin-xml/src/languages.js
+var languages_default = [
+  {
+    name: "Ant Build System",
+    tmScope: "text.xml.ant",
+    filenames: ["ant.xml", "build.xml"],
+    codemirrorMode: "xml",
+    codemirrorMimeType: "application/xml",
+    since: "0.1.0",
+    parsers: ["xml"],
+    linguistLanguageId: 15,
+    vscodeLanguageIds: ["xml"]
+  },
+  {
+    name: "COLLADA",
+    extensions: [".dae"],
+    tmScope: "text.xml",
+    codemirrorMode: "xml",
+    codemirrorMimeType: "text/xml",
+    since: "0.1.0",
+    parsers: ["xml"],
+    linguistLanguageId: 49,
+    vscodeLanguageIds: ["xml"]
+  },
+  {
+    name: "Eagle",
+    extensions: [".sch", ".brd"],
+    tmScope: "text.xml",
+    codemirrorMode: "xml",
+    codemirrorMimeType: "text/xml",
+    since: "0.1.0",
+    parsers: ["xml"],
+    linguistLanguageId: 97,
+    vscodeLanguageIds: ["xml"]
+  },
+  {
+    name: "Genshi",
+    extensions: [".kid"],
+    tmScope: "text.xml.genshi",
+    aliases: ["xml+genshi", "xml+kid"],
+    codemirrorMode: "xml",
+    codemirrorMimeType: "text/xml",
+    since: "0.1.0",
+    parsers: ["xml"],
+    linguistLanguageId: 126,
+    vscodeLanguageIds: ["xml"]
+  },
+  {
+    name: "JetBrains MPS",
+    aliases: ["mps"],
+    extensions: [".mps", ".mpl", ".msd"],
+    codemirrorMode: "xml",
+    codemirrorMimeType: "text/xml",
+    tmScope: "none",
+    since: "0.1.0",
+    parsers: ["xml"],
+    linguistLanguageId: 465165328,
+    vscodeLanguageIds: ["xml"]
+  },
+  {
+    name: "LabVIEW",
+    extensions: [".lvproj", ".lvclass", ".lvlib"],
+    tmScope: "text.xml",
+    codemirrorMode: "xml",
+    codemirrorMimeType: "text/xml",
+    since: "0.1.0",
+    parsers: ["xml"],
+    linguistLanguageId: 194,
+    vscodeLanguageIds: ["xml"]
+  },
+  {
+    name: "Maven POM",
+    group: "XML",
+    tmScope: "text.xml.pom",
+    filenames: ["pom.xml"],
+    codemirrorMode: "xml",
+    codemirrorMimeType: "text/xml",
+    since: "0.1.0",
+    parsers: ["xml"],
+    linguistLanguageId: 226,
+    vscodeLanguageIds: ["xml"]
+  },
+  {
+    name: "SVG",
+    extensions: [".svg"],
+    tmScope: "text.xml.svg",
+    codemirrorMode: "xml",
+    codemirrorMimeType: "text/xml",
+    since: "0.1.0",
+    parsers: ["xml"],
+    linguistLanguageId: 337,
+    vscodeLanguageIds: ["xml"]
+  },
+  {
+    name: "Web Ontology Language",
+    extensions: [".owl"],
+    tmScope: "text.xml",
+    since: "0.1.0",
+    parsers: ["xml"],
+    linguistLanguageId: 394,
+    vscodeLanguageIds: ["xml"]
+  },
+  {
+    name: "XML",
+    tmScope: "text.xml",
+    codemirrorMode: "xml",
+    codemirrorMimeType: "text/xml",
+    aliases: ["rss", "xsd", "wsdl"],
+    extensions: [
+      ".adml",
+      ".admx",
+      ".ant",
+      ".axaml",
+      ".axml",
+      ".builds",
+      ".ccproj",
+      ".ccxml",
+      ".clixml",
+      ".cproject",
+      ".cscfg",
+      ".csdef",
+      ".csl",
+      ".csproj",
+      ".ct",
+      ".depproj",
+      ".dita",
+      ".ditamap",
+      ".ditaval",
+      ".dll.config",
+      ".dotsettings",
+      ".filters",
+      ".fsproj",
+      ".fxml",
+      ".glade",
+      ".gml",
+      ".gmx",
+      ".grxml",
+      ".gst",
+      ".hzp",
+      ".iml",
+      ".inx",
+      ".ivy",
+      ".jelly",
+      ".jsproj",
+      ".kml",
+      ".launch",
+      ".mdpolicy",
+      ".mjml",
+      ".mm",
+      ".mod",
+      ".mxml",
+      ".natvis",
+      ".ncl",
+      ".ndproj",
+      ".nproj",
+      ".nuspec",
+      ".odd",
+      ".osm",
+      ".pkgproj",
+      ".pluginspec",
+      ".proj",
+      ".props",
+      ".ps1xml",
+      ".psc1",
+      ".pt",
+      ".qhelp",
+      ".rdf",
+      ".res",
+      ".resx",
+      ".rs",
+      ".rss",
+      ".runsettings",
+      ".sch",
+      ".scxml",
+      ".sfproj",
+      ".shproj",
+      ".srdf",
+      ".storyboard",
+      ".sublime-snippet",
+      ".sw",
+      ".targets",
+      ".tml",
+      ".ts",
+      ".tsx",
+      ".typ",
+      ".ui",
+      ".urdf",
+      ".ux",
+      ".vbproj",
+      ".vcxproj",
+      ".vsixmanifest",
+      ".vssettings",
+      ".vstemplate",
+      ".vxml",
+      ".wixproj",
+      ".workflow",
+      ".wsdl",
+      ".wsf",
+      ".wxi",
+      ".wxl",
+      ".wxs",
+      ".x3d",
+      ".xacro",
+      ".xaml",
+      ".xib",
+      ".xlf",
+      ".xliff",
+      ".xmi",
+      ".xml",
+      ".xml.dist",
+      ".xmp",
+      ".xproj",
+      ".xsd",
+      ".xspec",
+      ".xul",
+      ".zcml"
+    ],
+    filenames: [
+      ".classpath",
+      ".cproject",
+      ".project",
+      "App.config",
+      "NuGet.config",
+      "Settings.StyleCop",
+      "Web.Debug.config",
+      "Web.Release.config",
+      "Web.config",
+      "packages.config"
+    ],
+    since: "0.1.0",
+    parsers: ["xml"],
+    linguistLanguageId: 399,
+    vscodeLanguageIds: ["xml"]
+  },
+  {
+    name: "XML Property List",
+    group: "XML",
+    extensions: [
+      ".plist",
+      ".stTheme",
+      ".tmCommand",
+      ".tmLanguage",
+      ".tmPreferences",
+      ".tmSnippet",
+      ".tmTheme"
+    ],
+    tmScope: "text.xml.plist",
+    codemirrorMode: "xml",
+    codemirrorMimeType: "text/xml",
+    since: "0.1.0",
+    parsers: ["xml"],
+    linguistLanguageId: 75622871,
+    vscodeLanguageIds: ["xml"]
+  },
+  {
+    name: "XPages",
+    extensions: [".xsp-config", ".xsp.metadata"],
+    tmScope: "text.xml",
+    codemirrorMode: "xml",
+    codemirrorMimeType: "text/xml",
+    since: "0.1.0",
+    parsers: ["xml"],
+    linguistLanguageId: 400,
+    vscodeLanguageIds: ["xml"]
+  },
+  {
+    name: "XProc",
+    extensions: [".xpl", ".xproc"],
+    tmScope: "text.xml",
+    codemirrorMode: "xml",
+    codemirrorMimeType: "text/xml",
+    since: "0.1.0",
+    parsers: ["xml"],
+    linguistLanguageId: 401,
+    vscodeLanguageIds: ["xml"]
+  },
+  {
+    name: "XSLT",
+    aliases: ["xsl"],
+    extensions: [".xslt", ".xsl"],
+    tmScope: "text.xml.xsl",
+    codemirrorMode: "xml",
+    codemirrorMimeType: "text/xml",
+    since: "0.1.0",
+    parsers: ["xml"],
+    linguistLanguageId: 404,
+    vscodeLanguageIds: ["xml"]
+  }
+];
 
 // node_modules/@prettier/plugin-xml/src/parser.js
 var import_parser13 = __toESM(require_api(), 1);
+function createError(message, options) {
+  const error = new SyntaxError(
+    message + " (" + options.loc.start.line + ":" + options.loc.start.column + ")"
+  );
+  return Object.assign(error, options);
+}
+var parser = {
+  parse(text) {
+    const { lexErrors, parseErrors, cst } = (0, import_parser13.parse)(text);
+    if (lexErrors.length > 0) {
+      const lexError = lexErrors[0];
+      throw createError(lexError.message, {
+        loc: {
+          start: { line: lexError.line, column: lexError.column },
+          end: {
+            line: lexError.line,
+            column: lexError.column + lexError.length
+          }
+        }
+      });
+    }
+    if (parseErrors.length > 0) {
+      const parseError = parseErrors[0];
+      throw createError(parseError.message, {
+        loc: {
+          start: {
+            line: parseError.token.startLine,
+            column: parseError.token.startColumn
+          },
+          end: {
+            line: parseError.token.endLine,
+            column: parseError.token.endColumn
+          }
+        }
+      });
+    }
+    return cst;
+  },
+  astFormat: "xml",
+  locStart(node) {
+    return node.location.startOffset;
+  },
+  locEnd(node) {
+    return node.location.endOffset;
+  }
+};
+var parser_default = parser;
 
 // node_modules/@prettier/plugin-xml/src/printer.js
-var doc2 = __toESM(require("prettier/doc"), 1);
+import * as doc2 from "prettier/doc";
 
 // node_modules/@prettier/plugin-xml/src/embed.js
-var doc = __toESM(require("prettier/doc"), 1);
+import * as doc from "prettier/doc";
 var {
   dedentToRoot,
   group,
@@ -8616,12 +8947,630 @@ var {
   literalline,
   softline
 } = doc.builders;
+function getElementTags(path, opts, print) {
+  const node = path.getValue();
+  const { OPEN, Name, attribute, START_CLOSE, SLASH_OPEN, END_NAME, END } = node.children;
+  const parts = [OPEN[0].image, Name[0].image];
+  if (attribute) {
+    parts.push(
+      indent2([line, join(line, path.map(print, "children", "attribute"))])
+    );
+  }
+  if (!opts.bracketSameLine) {
+    parts.push(softline);
+  }
+  return {
+    openTag: group([...parts, START_CLOSE[0].image]),
+    closeTag: group([SLASH_OPEN[0].image, END_NAME[0].image, END[0].image])
+  };
+}
+function getTagType(attributes) {
+  for (const attribute of attributes) {
+    if (attribute.children.Name[0].image === "type") {
+      const value = attribute.children.STRING[0].image;
+      if (value.startsWith('"text/') && value.endsWith('"')) {
+        return value.slice(6, -1);
+      }
+    }
+  }
+  return null;
+}
+function getParser(node, opts) {
+  const { Name, attribute } = node.children;
+  let parser2 = Name[0].image.toLowerCase();
+  if (parser2 === "xml") {
+    return null;
+  }
+  if ((parser2 === "style" || parser2 === "script") && attribute) {
+    parser2 = getTagType(attribute);
+  }
+  if (parser2 === "javascript") {
+    parser2 = "babel";
+  }
+  if (opts.plugins.some(
+    (plugin2) => typeof plugin2 !== "string" && plugin2.parsers && Object.prototype.hasOwnProperty.call(plugin2.parsers, parser2)
+  )) {
+    return parser2;
+  }
+  return null;
+}
+function getSource(content) {
+  return content.chardata.map((node) => {
+    const { SEA_WS, TEXT } = node.children;
+    const [{ image }] = SEA_WS || TEXT;
+    return {
+      offset: node.location.startOffset,
+      printed: image
+    };
+  }).sort(({ offset }) => offset).map(({ printed }) => printed).join("");
+}
+function embed(path, opts) {
+  const node = path.getValue();
+  if (node.name !== "element") {
+    return;
+  }
+  const parser2 = getParser(node, opts);
+  if (!parser2) {
+    return;
+  }
+  if (!node.children.content) {
+    return;
+  }
+  const content = node.children.content[0].children;
+  if (Object.keys(content).length !== 1 || !content.chardata) {
+    return;
+  }
+  return async function(textToDoc, print) {
+    const { openTag, closeTag } = getElementTags(path, opts, print);
+    const docNode = await textToDoc(getSource(content), { parser: parser2 });
+    return group([
+      openTag,
+      literalline,
+      dedentToRoot(doc.utils.replaceEndOfLine(docNode)),
+      hardline,
+      closeTag
+    ]);
+  };
+}
+var embed_default = embed;
 
 // node_modules/@prettier/plugin-xml/src/printer.js
 var { fill, group: group2, hardline: hardline2, indent: indent3, join: join2, line: line2, literalline: literalline2, softline: softline2 } = doc2.builders;
+var ignoreStartComment = "<!-- prettier-ignore-start -->";
+var ignoreEndComment = "<!-- prettier-ignore-end -->";
+function hasIgnoreRanges(comments) {
+  if (!comments || comments.length === 0) {
+    return false;
+  }
+  comments.sort((left, right) => left.startOffset - right.startOffset);
+  let startFound = false;
+  for (let idx = 0; idx < comments.length; idx += 1) {
+    if (comments[idx].image === ignoreStartComment) {
+      startFound = true;
+    } else if (startFound && comments[idx].image === ignoreEndComment) {
+      return true;
+    }
+  }
+  return false;
+}
+function isWhitespaceIgnorable(opts, attributes, content) {
+  if (opts.xmlWhitespaceSensitivity === "strict") {
+    return false;
+  }
+  if (attributes && attributes.some(
+    (attribute) => attribute && attribute.children.Name[0].image === "xml:space" && attribute.children.STRING[0].image.slice(1, -1) === "preserve"
+  )) {
+    return false;
+  }
+  if (content.children.CData || content.children.reference) {
+    return false;
+  }
+  if (hasIgnoreRanges(content.children.Comment)) {
+    return false;
+  }
+  return true;
+}
+function printIToken(path) {
+  const node = path.getValue();
+  return {
+    offset: node.startOffset,
+    startLine: node.startLine,
+    endLine: node.endLine,
+    printed: node.image
+  };
+}
+function printAttribute(path, opts, print) {
+  const { Name, EQUALS, STRING } = path.getValue().children;
+  let attributeValue;
+  if (opts.xmlQuoteAttributes === "double") {
+    const content = STRING[0].image.slice(1, -1).replaceAll('"', "&quot;");
+    attributeValue = `"${content}"`;
+  } else if (opts.xmlQuoteAttributes === "single") {
+    const content = STRING[0].image.slice(1, -1).replaceAll("'", "&apos;");
+    attributeValue = `'${content}'`;
+  } else {
+    attributeValue = STRING[0].image;
+  }
+  return [Name[0].image, EQUALS[0].image, attributeValue];
+}
+function printCharData(path, opts, print) {
+  const { SEA_WS, TEXT } = path.getValue().children;
+  const [{ image }] = SEA_WS || TEXT;
+  return image.split(/(\n)/g).map((value, index) => index % 2 === 0 ? value : literalline2);
+}
+function printContentFragments(path, print) {
+  let response = [];
+  const children = path.getValue();
+  if (children.CData) {
+    response = response.concat(path.map(printIToken, "CData"));
+  }
+  if (children.Comment) {
+    response = response.concat(path.map(printIToken, "Comment"));
+  }
+  if (children.chardata) {
+    response = response.concat(
+      path.map(
+        (charDataPath) => ({
+          offset: charDataPath.getValue().location.startOffset,
+          printed: print(charDataPath)
+        }),
+        "chardata"
+      )
+    );
+  }
+  if (children.element) {
+    response = response.concat(
+      path.map(
+        (elementPath) => ({
+          offset: elementPath.getValue().location.startOffset,
+          printed: print(elementPath)
+        }),
+        "element"
+      )
+    );
+  }
+  if (children.PROCESSING_INSTRUCTION) {
+    response = response.concat(path.map(printIToken, "PROCESSING_INSTRUCTION"));
+  }
+  if (children.reference) {
+    response = response.concat(
+      path.map((referencePath) => {
+        const referenceNode = referencePath.getValue();
+        return {
+          offset: referenceNode.location.startOffset,
+          printed: (referenceNode.children.CharRef || referenceNode.children.EntityRef)[0].image
+        };
+      }, "reference")
+    );
+  }
+  return response;
+}
+function printContent(path, opts, print) {
+  let fragments = path.call(
+    (childrenPath) => printContentFragments(childrenPath, print),
+    "children"
+  );
+  const { Comment } = path.getValue().children;
+  if (hasIgnoreRanges(Comment)) {
+    Comment.sort((left, right) => left.startOffset - right.startOffset);
+    const ignoreRanges = [];
+    let ignoreStart = null;
+    Comment.forEach((comment) => {
+      if (comment.image === ignoreStartComment) {
+        ignoreStart = comment;
+      } else if (ignoreStart && comment.image === ignoreEndComment) {
+        ignoreRanges.push({
+          start: ignoreStart.startOffset,
+          end: comment.endOffset
+        });
+        ignoreStart = null;
+      }
+    });
+    fragments = fragments.filter(
+      (fragment) => ignoreRanges.every(
+        ({ start, end }) => fragment.offset < start || fragment.offset > end
+      )
+    );
+    ignoreRanges.forEach(({ start, end }) => {
+      const content = opts.originalText.slice(start, end + 1);
+      fragments.push({
+        offset: start,
+        printed: doc2.utils.replaceEndOfLine(content)
+      });
+    });
+  }
+  fragments.sort((left, right) => left.offset - right.offset);
+  return group2(fragments.map(({ printed }) => printed));
+}
+function printDocTypeDecl(path, opts, print) {
+  const { DocType, Name, externalID, CLOSE } = path.getValue().children;
+  const parts = [DocType[0].image, " ", Name[0].image];
+  if (externalID) {
+    parts.push(" ", path.call(print, "children", "externalID", 0));
+  }
+  return group2([...parts, CLOSE[0].image]);
+}
+function printDocument(path, opts, print) {
+  const { docTypeDecl, element, misc, prolog } = path.getValue().children;
+  const fragments = [];
+  if (docTypeDecl) {
+    fragments.push({
+      offset: docTypeDecl[0].location.startOffset,
+      printed: path.call(print, "children", "docTypeDecl", 0)
+    });
+  }
+  if (prolog) {
+    fragments.push({
+      offset: prolog[0].location.startOffset,
+      printed: path.call(print, "children", "prolog", 0)
+    });
+  }
+  if (misc) {
+    misc.forEach((node) => {
+      if (node.children.PROCESSING_INSTRUCTION) {
+        fragments.push({
+          offset: node.location.startOffset,
+          printed: node.children.PROCESSING_INSTRUCTION[0].image
+        });
+      } else if (node.children.Comment) {
+        fragments.push({
+          offset: node.location.startOffset,
+          printed: node.children.Comment[0].image
+        });
+      }
+    });
+  }
+  if (element) {
+    fragments.push({
+      offset: element[0].location.startOffset,
+      printed: path.call(print, "children", "element", 0)
+    });
+  }
+  fragments.sort((left, right) => left.offset - right.offset);
+  return [
+    join2(
+      hardline2,
+      fragments.map(({ printed }) => printed)
+    ),
+    hardline2
+  ];
+}
+function printCharDataPreserve(path, print) {
+  let prevLocation;
+  const response = [];
+  path.each((charDataPath) => {
+    const chardata = charDataPath.getValue();
+    const location = chardata.location;
+    const content = print(charDataPath);
+    if (prevLocation && location.startColumn && prevLocation.endColumn && location.startLine === prevLocation.endLine && location.startColumn === prevLocation.endColumn + 1) {
+      const prevFragment = response[response.length - 1];
+      prevFragment.endLine = location.endLine;
+      prevFragment.printed = group2([prevFragment.printed, content]);
+    } else {
+      response.push({
+        offset: location.startOffset,
+        startLine: location.startLine,
+        endLine: location.endLine,
+        printed: content,
+        whitespace: true
+      });
+    }
+    prevLocation = location;
+  }, "chardata");
+  return response;
+}
+function printCharDataIgnore(path) {
+  const response = [];
+  path.each((charDataPath) => {
+    const chardata = charDataPath.getValue();
+    if (!chardata.children.TEXT) {
+      return;
+    }
+    const content = chardata.children.TEXT[0].image.trim();
+    const printed = group2(
+      content.split(/(\n)/g).map((value) => {
+        if (value === "\n") {
+          return literalline2;
+        }
+        return fill(
+          value.split(/\b( +)\b/g).map((segment, index) => index % 2 === 0 ? segment : line2)
+        );
+      })
+    );
+    const location = chardata.location;
+    response.push({
+      offset: location.startOffset,
+      startLine: location.startLine,
+      endLine: location.endLine,
+      printed
+    });
+  }, "chardata");
+  return response;
+}
+function printElementFragments(path, opts, print) {
+  const children = path.getValue();
+  let response = [];
+  if (children.Comment) {
+    response = response.concat(path.map(printIToken, "Comment"));
+  }
+  if (children.chardata) {
+    if (children.chardata.some(({ children: children2 }) => !!children2.TEXT) && opts.xmlWhitespaceSensitivity === "preserve") {
+      response = response.concat(printCharDataPreserve(path, print));
+    } else {
+      response = response.concat(printCharDataIgnore(path, print));
+    }
+  }
+  if (children.element) {
+    response = response.concat(
+      path.map((elementPath) => {
+        const location = elementPath.getValue().location;
+        return {
+          offset: location.startOffset,
+          startLine: location.startLine,
+          endLine: location.endLine,
+          printed: print(elementPath)
+        };
+      }, "element")
+    );
+  }
+  if (children.PROCESSING_INSTRUCTION) {
+    response = response.concat(path.map(printIToken, "PROCESSING_INSTRUCTION"));
+  }
+  return response;
+}
+function printElement(path, opts, print) {
+  const {
+    OPEN,
+    Name,
+    attribute,
+    START_CLOSE,
+    content,
+    SLASH_OPEN,
+    END_NAME,
+    END,
+    SLASH_CLOSE
+  } = path.getValue().children;
+  const parts = [OPEN[0].image, Name[0].image];
+  if (attribute) {
+    const attributes = path.map(
+      (attributePath) => ({
+        node: attributePath.getValue(),
+        printed: print(attributePath)
+      }),
+      "children",
+      "attribute"
+    );
+    if (opts.xmlSortAttributesByKey) {
+      attributes.sort((left, right) => {
+        const leftAttr = left.node.children.Name[0].image;
+        const rightAttr = right.node.children.Name[0].image;
+        if (leftAttr === "xmlns")
+          return -1;
+        if (rightAttr === "xmlns")
+          return 1;
+        if (leftAttr.includes(":") && rightAttr.includes(":")) {
+          const [leftNS, leftKey] = leftAttr.split(":");
+          const [rightNS, rightKey] = rightAttr.split(":");
+          if (leftNS === rightNS)
+            return leftKey.localeCompare(rightKey);
+          if (leftNS === "xmlns")
+            return -1;
+          if (rightNS === "xmlns")
+            return 1;
+          return leftNS.localeCompare(rightNS);
+        }
+        if (leftAttr.includes(":"))
+          return -1;
+        if (rightAttr.includes(":"))
+          return 1;
+        return leftAttr.localeCompare(rightAttr);
+      });
+    }
+    const separator = opts.singleAttributePerLine ? hardline2 : line2;
+    parts.push(
+      indent3([
+        line2,
+        join2(
+          separator,
+          attributes.map(({ printed }) => printed)
+        )
+      ])
+    );
+  }
+  let space;
+  if (opts.bracketSameLine) {
+    space = opts.xmlSelfClosingSpace ? " " : "";
+  } else {
+    space = opts.xmlSelfClosingSpace ? line2 : softline2;
+  }
+  if (SLASH_CLOSE) {
+    return group2([...parts, space, SLASH_CLOSE[0].image]);
+  }
+  if (Object.keys(content[0].children).length === 0) {
+    return group2([...parts, space, "/>"]);
+  }
+  const openTag = group2([
+    ...parts,
+    opts.bracketSameLine ? "" : softline2,
+    START_CLOSE[0].image
+  ]);
+  const closeTag = group2([
+    SLASH_OPEN[0].image,
+    END_NAME[0].image,
+    END[0].image
+  ]);
+  if (isWhitespaceIgnorable(opts, attribute, content[0])) {
+    const fragments = path.call(
+      (childrenPath) => printElementFragments(childrenPath, opts, print),
+      "children",
+      "content",
+      0,
+      "children"
+    );
+    fragments.sort((left, right) => left.offset - right.offset);
+    if (opts.xmlWhitespaceSensitivity === "preserve" && fragments.some(({ whitespace }) => whitespace)) {
+      return group2([
+        openTag,
+        fragments.map(({ printed }) => printed),
+        closeTag
+      ]);
+    }
+    if (fragments.length === 1 && (content[0].children.chardata || []).filter(
+      (chardata) => chardata.children.TEXT
+    ).length === 1) {
+      return group2([
+        openTag,
+        indent3([softline2, fragments[0].printed]),
+        softline2,
+        closeTag
+      ]);
+    }
+    if (fragments.length === 0) {
+      return group2([...parts, space, "/>"]);
+    }
+    const docs = [];
+    let lastLine = fragments[0].startLine;
+    fragments.forEach((node) => {
+      if (node.startLine - lastLine >= 2) {
+        docs.push(hardline2, hardline2);
+      } else {
+        docs.push(hardline2);
+      }
+      docs.push(node.printed);
+      lastLine = node.endLine;
+    });
+    return group2([openTag, indent3(docs), hardline2, closeTag]);
+  }
+  return group2([
+    openTag,
+    indent3(path.call(print, "children", "content", 0)),
+    closeTag
+  ]);
+}
+function printExternalID(path, opts, print) {
+  const { Public, PubIDLiteral, System, SystemLiteral } = path.getValue().children;
+  if (System) {
+    return group2([System[0].image, indent3([line2, SystemLiteral[0].image])]);
+  }
+  return group2([
+    group2([Public[0].image, indent3([line2, PubIDLiteral[0].image])]),
+    indent3([line2, SystemLiteral[0].image])
+  ]);
+}
+function printProlog(path, opts, print) {
+  const { XMLDeclOpen, attribute, SPECIAL_CLOSE } = path.getValue().children;
+  const parts = [XMLDeclOpen[0].image];
+  if (attribute) {
+    parts.push(
+      indent3([softline2, join2(line2, path.map(print, "children", "attribute"))])
+    );
+  }
+  return group2([
+    ...parts,
+    opts.xmlSelfClosingSpace ? line2 : softline2,
+    SPECIAL_CLOSE[0].image
+  ]);
+}
+var printer = {
+  embed: embed_default,
+  print(path, opts, print) {
+    const node = path.getValue();
+    switch (node.name) {
+      case "attribute":
+        return printAttribute(path, opts, print);
+      case "chardata":
+        return printCharData(path, opts, print);
+      case "content":
+        return printContent(path, opts, print);
+      case "docTypeDecl":
+        return printDocTypeDecl(path, opts, print);
+      case "document":
+        return printDocument(path, opts, print);
+      case "element":
+        return printElement(path, opts, print);
+      case "externalID":
+        return printExternalID(path, opts, print);
+      case "prolog":
+        return printProlog(path, opts, print);
+    }
+  }
+};
+var printer_default = printer;
+
+// node_modules/@prettier/plugin-xml/src/plugin.js
+var plugin = {
+  languages: languages_default,
+  parsers: {
+    xml: parser_default
+  },
+  printers: {
+    xml: printer_default
+  },
+  options: {
+    xmlSelfClosingSpace: {
+      type: "boolean",
+      category: "XML",
+      default: true,
+      description: "Adds a space before self-closing tags.",
+      since: "1.1.0"
+    },
+    xmlWhitespaceSensitivity: {
+      type: "choice",
+      category: "XML",
+      default: "strict",
+      description: "How to handle whitespaces in XML.",
+      choices: [
+        {
+          value: "strict",
+          description: "Whitespaces are considered sensitive in all elements."
+        },
+        {
+          value: "preserve",
+          description: "Whitespaces within text nodes in XML elements and attributes are considered sensitive."
+        },
+        {
+          value: "ignore",
+          description: "Whitespaces are considered insensitive in all elements."
+        }
+      ],
+      since: "0.6.0"
+    },
+    xmlSortAttributesByKey: {
+      type: "boolean",
+      category: "XML",
+      default: false,
+      description: "Orders XML attributes by key alphabetically while prioritizing xmlns attributes."
+    },
+    xmlQuoteAttributes: {
+      type: "choice",
+      category: "XML",
+      default: "preserve",
+      description: "How to handle whitespaces in XML.",
+      choices: [
+        {
+          value: "preserve",
+          description: "Quotes in attribute values will be preserved as written."
+        },
+        {
+          value: "single",
+          description: "Quotes in attribute values will be converted to consistent single quotes and other quotes in the string will be escaped."
+        },
+        {
+          value: "double",
+          description: "Quotes in attribute values will be converted to consistent double quotes and other quotes in the string will be escaped."
+        }
+      ]
+    }
+  },
+  defaultOptions: {
+    printWidth: 80,
+    tabWidth: 2
+  }
+};
+var plugin_default = plugin;
 
 // src/utils.ts
-var XML_LICENSE = `<!-- This Source Code Form is subject to the terms of the Mozilla Public${import_os2.EOL}   - License, v. 2.0. If a copy of the MPL was not distributed with this${import_os2.EOL}   - file, You can obtain one at http://mozilla.org/MPL/2.0/. -->`;
+var XML_LICENSE = `<!-- This Source Code Form is subject to the terms of the Mozilla Public${EOL2}   - License, v. 2.0. If a copy of the MPL was not distributed with this${EOL2}   - file, You can obtain one at http://mozilla.org/MPL/2.0/. -->`;
 function getInput(name, required = true) {
   const val = getEnv(`INPUT_${name.replace(/ /g, "_").toUpperCase()}`);
   if (required && !val) {
@@ -8631,6 +9580,14 @@ function getInput(name, required = true) {
 }
 function getEnv(name) {
   return process.env[name] || "";
+}
+function ensureLicense(input) {
+  const regex = new RegExp(
+    "<!-- This Source Code Form is[\\s\\S]*?http://mozilla.org/MPL/2.0/. -->\\s*",
+    "g"
+  );
+  const output = input.replace(regex, "");
+  return `${XML_LICENSE}${EOL2}${output}`;
 }
 async function tryCatch(fn, errorSummary) {
   try {
@@ -8642,37 +9599,53 @@ async function tryCatch(fn, errorSummary) {
     process.exit(1);
   }
 }
-
-// src/commit-changes/index.ts
-var { writeFile: writeFile2 } = import_fs2.promises;
-tryCatch(run, "Failed to commit changes. See logs for details.");
-async function run() {
-  const message = getInput("message", true);
-  const status = await (0, import_simple_git.simpleGit)().status();
-  if (status.files.length === 0) {
-    summary.addHeading(":arrow_up: Did not commit any files", 3);
-    summary.addRaw(`Did not commit because there were no changed files.`);
-    summary.write();
-    return;
+async function formatFile(type, content) {
+  if (!["svg", "xml"].includes(type)) {
+    throw new Error(`Invalid type to format: ${type}`);
   }
-  await (0, import_simple_git.simpleGit)().add(status.files.map((file) => file.path));
-  await setupGit();
-  await (0, import_simple_git.simpleGit)().commit(message).push("origin");
-  summary.addHeading(`:arrow_up: Committed ${status.files.length} files`, 3);
-  summary.write();
+  const formatted = await prettier.format(content, {
+    parser: "xml",
+    plugins: [plugin_default],
+    tabWidth: 4,
+    printWidth: type === "svg" ? 1e5 : 80,
+    singleAttributePerLine: false,
+    htmlWhitespaceSensitivity: "ignore",
+    bracketSameLine: true,
+    xmlWhitespaceSensitivity: "ignore"
+  });
+  return formatted;
 }
-async function setupGit() {
-  if (!process.env.GITHUB_ACTOR)
-    return;
-  const netrcContent = `
-    machine github.com
-    login ${process.env.GITHUB_ACTOR}
-    password ${process.env.INPUT_GITHUB_TOKEN}
-    machine api.github.com
-    login ${process.env.GITHUB_ACTOR}
-    password ${process.env.INPUT_GITHUB_TOKEN}
-  `;
-  await writeFile2(`${process.env.HOME}/.netrc`, netrcContent, { mode: 384 });
-  (0, import_child_process.execSync)('git config --global user.email "actions@github.com"');
-  (0, import_child_process.execSync)('git config --global user.name "GitHub Action"');
+var svgoBasePlugins = [
+  "removeDesc",
+  "removeStyleElement",
+  "removeOffCanvasPaths",
+  "removeNonInheritableGroupAttrs",
+  "sortAttrs",
+  {
+    name: "preset-default",
+    params: {
+      overrides: {
+        removeViewBox: false
+      }
+    }
+  }
+];
+function svgoRemoveAttrs(attrs) {
+  const attrString = attrs.map((attr) => attr.trim()).join("|");
+  return {
+    name: "removeAttrs",
+    params: {
+      attrs: `(${attrString})`
+    }
+  };
 }
+
+export {
+  summary,
+  getInput,
+  ensureLicense,
+  tryCatch,
+  formatFile,
+  svgoBasePlugins,
+  svgoRemoveAttrs
+};
