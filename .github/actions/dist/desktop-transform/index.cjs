@@ -8307,9 +8307,8 @@ var require_api = __commonJS({
 
 // src/desktop-transform/index.ts
 var import_svgo = require("svgo");
-
-// src/utils.ts
-var import_os2 = require("os");
+var import_fast_glob = __toESM(require("fast-glob"), 1);
+var import_fs2 = __toESM(require("fs"), 1);
 
 // src/summary.ts
 var import_os = require("os");
@@ -8596,6 +8595,7 @@ var _summary = new Summary();
 var summary = _summary;
 
 // src/utils.ts
+var import_os2 = require("os");
 var import_prettier = __toESM(require("prettier"), 1);
 
 // node_modules/@prettier/plugin-xml/src/languages.js
@@ -9626,6 +9626,7 @@ var svgoBasePlugins = [
   "removeStyleElement",
   "removeOffCanvasPaths",
   "removeNonInheritableGroupAttrs",
+  "sortAttrs",
   {
     name: "preset-default",
     params: {
@@ -9646,15 +9647,19 @@ function svgoRemoveAttrs(attrs) {
 }
 
 // src/desktop-transform/index.ts
-var import_fast_glob = __toESM(require("fast-glob"), 1);
-var import_fs2 = __toESM(require("fs"), 1);
 tryCatch(run, "Failed to check desktop SVGs. See logs for details.");
 async function run() {
   const filesGlob = getInput("files", true);
   const files = await (0, import_fast_glob.default)(filesGlob);
+  if (files.length === 0) {
+    summary.addHeading(":desktop_computer: No files found", 3);
+    summary.addAlert("warning", `No files found matching "${filesGlob}".`);
+    summary.write();
+    return;
+  }
   const changedFiles = [];
   for (const file of files) {
-    if (await checkSvg(file)) {
+    if (await updateDesktopIcon(file)) {
       changedFiles.push(file);
     }
   }
@@ -9671,14 +9676,22 @@ async function run() {
   summary.addList(changedFiles);
   summary.write();
 }
-async function checkSvg(path) {
+async function updateDesktopIcon(path) {
   if (!path.endsWith(".svg")) {
     return false;
   }
   const originalFile = import_fs2.default.readFileSync(path, "utf8");
   const result = (0, import_svgo.optimize)(originalFile, {
     plugins: [
+      // custom plugin to add viewBox and dimensions if missing
+      viewBoxAndDimensions,
+      // custom plugin to add context fill
+      addContextFill,
+      // Import the base config from utils.ts
       ...svgoBasePlugins,
+      // Remove all these attributes
+      // They usually are added in the export process but for our simple
+      //shapes we don't need them
       svgoRemoveAttrs([
         "id",
         "data-name",
@@ -9690,62 +9703,7 @@ async function checkSvg(path) {
         "clip-rule",
         "fill-rule",
         "fill-opacity"
-      ]),
-      {
-        name: "viewBoxAndDimensions",
-        fn: () => ({
-          element: {
-            exit(node) {
-              if (node.name !== "svg") {
-                return;
-              }
-              const viewBox = node.attributes.viewBox;
-              const width = node.attributes.width;
-              const height = node.attributes.height;
-              if (viewBox && width && height) {
-                return;
-              }
-              if (viewBox && !width || !height) {
-                const [, , w, h] = viewBox.split(" ");
-                node.attributes.width = w;
-                node.attributes.height = h;
-              } else if (width && height && !viewBox) {
-                node.attributes.viewBox = `0 0 ${width} ${height}`;
-              } else {
-                throw new Error("SVG has no width, height, or viewBox");
-              }
-            }
-          }
-        })
-      },
-      {
-        name: "addContextFill",
-        fn: () => ({
-          element: {
-            exit(node) {
-              if (node.name !== "svg") {
-                return;
-              }
-              node.attributes.fill = "context-fill";
-              node.attributes["fill-opacity"] = "context-fill-opacity";
-            }
-          }
-        })
-      },
-      {
-        name: "addContextFill",
-        fn: () => ({
-          element: {
-            exit(node) {
-              if (node.name !== "svg") {
-                return;
-              }
-              node.attributes.fill = "context-fill";
-              node.attributes["fill-opacity"] = "context-fill-opacity";
-            }
-          }
-        })
-      }
+      ])
     ]
   });
   const formatted = await formatFile("svg", result.data);
@@ -9756,3 +9714,44 @@ async function checkSvg(path) {
   }
   return fileChanged;
 }
+var viewBoxAndDimensions = {
+  name: "viewBoxAndDimensions",
+  fn: () => ({
+    element: {
+      enter(node) {
+        if (node.name !== "svg") {
+          return;
+        }
+        const viewBox = node.attributes.viewBox;
+        const width = node.attributes.width;
+        const height = node.attributes.height;
+        if (viewBox && width && height) {
+          return;
+        }
+        if (viewBox && !width || !height) {
+          const [, , w, h] = viewBox.split(" ");
+          node.attributes.width = w;
+          node.attributes.height = h;
+        } else if (width && height && !viewBox) {
+          node.attributes.viewBox = `0 0 ${width} ${height}`;
+        } else {
+          throw new Error("SVG has no width, height, or viewBox");
+        }
+      }
+    }
+  })
+};
+var addContextFill = {
+  name: "addContextFill",
+  fn: () => ({
+    element: {
+      enter(node) {
+        if (node.name !== "svg") {
+          return;
+        }
+        node.attributes.fill = "context-fill";
+        node.attributes["fill-opacity"] = "context-fill-opacity";
+      }
+    }
+  })
+};

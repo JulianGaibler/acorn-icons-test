@@ -8305,8 +8305,10 @@ var require_api = __commonJS({
   }
 });
 
-// src/utils.ts
-var import_os2 = require("os");
+// src/mobile-transform/index.ts
+var import_node_fs = __toESM(require("fs"), 1);
+var import_fast_glob = __toESM(require("fast-glob"), 1);
+var import_svgo = require("svgo");
 
 // src/summary.ts
 var import_os = require("os");
@@ -8593,6 +8595,7 @@ var _summary = new Summary();
 var summary = _summary;
 
 // src/utils.ts
+var import_os2 = require("os");
 var import_prettier = __toESM(require("prettier"), 1);
 
 // node_modules/@prettier/plugin-xml/src/languages.js
@@ -9623,6 +9626,7 @@ var svgoBasePlugins = [
   "removeStyleElement",
   "removeOffCanvasPaths",
   "removeNonInheritableGroupAttrs",
+  "sortAttrs",
   {
     name: "preset-default",
     params: {
@@ -9643,17 +9647,20 @@ function svgoRemoveAttrs(attrs) {
 }
 
 // src/mobile-transform/index.ts
-var import_node_fs = __toESM(require("fs"), 1);
-var import_fast_glob = __toESM(require("fast-glob"), 1);
-var import_svgo = require("svgo");
 tryCatch(run, "Failed to check mobile files. See logs for details.");
 async function run() {
   const filesGlob = getInput("files", true);
   const fileType = getInput("file_type", true);
   const files = await (0, import_fast_glob.default)(filesGlob);
+  if (files.length === 0) {
+    summary.addHeading(":desktop_computer: No files found", 3);
+    summary.addAlert("warning", `No files found matching "${filesGlob}".`);
+    summary.write();
+    return;
+  }
   const changedFiles = [];
   for (const file of files) {
-    if (await checkSvg(file, fileType)) {
+    if (await updateMobileIcon(file, fileType)) {
       changedFiles.push(file);
     }
   }
@@ -9672,7 +9679,7 @@ async function run() {
   summary.addList(changedFiles);
   summary.write();
 }
-async function checkSvg(path, type) {
+async function updateMobileIcon(path, type) {
   if (!path.endsWith(`.${type}`)) {
     return false;
   }
@@ -9681,7 +9688,9 @@ async function checkSvg(path, type) {
   if (type === "svg") {
     formatted = (0, import_svgo.optimize)(originalFile, {
       plugins: [
-        ...svgoBasePlugins,
+        // Remove all these attributes
+        // They usually are added in the export process but for our simple
+        // shapes we don't need them
         svgoRemoveAttrs([
           "id",
           "data-name",
@@ -9689,7 +9698,9 @@ async function checkSvg(path, type) {
           "stroke",
           "stroke-width",
           "stroke-miterlimit"
-        ])
+        ]),
+        // Import the base config from utils.ts
+        ...svgoBasePlugins
       ]
     }).data;
   }

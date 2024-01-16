@@ -8307,10 +8307,8 @@ var require_api = __commonJS({
 
 // src/commit-changes/index.ts
 var import_fs2 = require("fs");
+var import_child_process = require("child_process");
 var import_simple_git = require("simple-git");
-
-// src/utils.ts
-var import_os2 = require("os");
 
 // src/summary.ts
 var import_os = require("os");
@@ -8597,6 +8595,7 @@ var _summary = new Summary();
 var summary = _summary;
 
 // src/utils.ts
+var import_os2 = require("os");
 var import_prettier = __toESM(require("prettier"), 1);
 
 // node_modules/@prettier/plugin-xml/src/parser.js
@@ -8645,7 +8644,6 @@ async function tryCatch(fn, errorSummary) {
 }
 
 // src/commit-changes/index.ts
-var import_child_process = require("child_process");
 var { writeFile: writeFile2 } = import_fs2.promises;
 tryCatch(run, "Failed to commit changes. See logs for details.");
 async function run() {
@@ -8661,7 +8659,6 @@ async function run() {
   await setupGit();
   await (0, import_simple_git.simpleGit)().commit(message).push("origin");
   summary.addHeading(`:arrow_up: Committed ${status.files.length} files`, 3);
-  summary.addList(status.files.map((file) => file.path));
   summary.write();
 }
 async function setupGit() {
