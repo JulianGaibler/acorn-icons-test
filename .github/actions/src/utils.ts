@@ -69,7 +69,7 @@ export function ensureLicense(input: string): string {
  * @param errorSummary Message to add to the summary if the function throws an error
  * @returns Promise of the result of the function
  */
-export async function tryCatch(fn: Function, errorSummary: string) {
+export async function tryCatch(fn: () => void, errorSummary: string) {
   try {
     return await fn()
   } catch (error) {
@@ -115,6 +115,7 @@ export const svgoBasePlugins: Exclude<Config['plugins'], undefined> = [
   'removeStyleElement',
   'removeOffCanvasPaths',
   'removeNonInheritableGroupAttrs',
+  'sortAttrs',
   {
     name: 'preset-default',
     params: {

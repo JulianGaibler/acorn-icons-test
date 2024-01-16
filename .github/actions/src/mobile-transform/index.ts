@@ -83,7 +83,6 @@ async function updateMobileIcon(
   if (type === 'svg') {
     formatted = optimize(originalFile, {
       plugins: [
-        ...svgoBasePlugins,
         // Remove all these attributes
         // They usually are added in the export process but for our simple
         // shapes we don't need them
@@ -95,6 +94,8 @@ async function updateMobileIcon(
           'stroke-width',
           'stroke-miterlimit',
         ]),
+        // Import the base config from utils.ts
+        ...svgoBasePlugins,
       ],
     }).data
   }
