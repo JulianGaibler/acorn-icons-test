@@ -6,7 +6,7 @@ import {
   svgoBasePlugins,
   svgoRemoveAttrs,
   tryCatch
-} from "../chunk-NPWPJ5EQ.js";
+} from "../chunk-BDXLBHEC.js";
 
 // src/mobile-transform/index.ts
 import fs from "fs";
@@ -48,6 +48,7 @@ async function updateMobileIcon(path, type) {
   if (!path.endsWith(`.${type}`)) {
     return false;
   }
+  console.log(`::notice::Checking ${path}`);
   const originalFile = fs.readFileSync(path, "utf8");
   let formatted = originalFile;
   if (type === "svg") {

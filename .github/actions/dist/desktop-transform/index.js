@@ -6,7 +6,7 @@ import {
   svgoBasePlugins,
   svgoRemoveAttrs,
   tryCatch
-} from "../chunk-NPWPJ5EQ.js";
+} from "../chunk-BDXLBHEC.js";
 
 // src/desktop-transform/index.ts
 import { optimize } from "svgo";
@@ -45,6 +45,7 @@ async function updateDesktopIcon(path) {
   if (!path.endsWith(".svg")) {
     return false;
   }
+  console.log(`::notice::Checking ${path}`);
   const originalFile = fs.readFileSync(path, "utf8");
   const result = optimize(originalFile, {
     plugins: [

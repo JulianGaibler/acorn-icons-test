@@ -73,6 +73,7 @@ export async function tryCatch(fn: () => void, errorSummary: string) {
   try {
     return await fn()
   } catch (error) {
+    console.log(`::error title=Action failed:: ${errorSummary}`)
     console.error(error)
     summary.addAlert('caution', errorSummary)
     summary.write()

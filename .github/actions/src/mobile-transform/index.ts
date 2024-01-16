@@ -74,6 +74,7 @@ async function updateMobileIcon(
   if (!path.endsWith(`.${type}`)) {
     return false
   }
+  console.log(`::notice::Checking ${path}`)
   // Now load the file's contents from disk
   const originalFile = fs.readFileSync(path, 'utf8')
 

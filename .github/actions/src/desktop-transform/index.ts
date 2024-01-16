@@ -66,6 +66,7 @@ async function updateDesktopIcon(path: string): Promise<boolean> {
   if (!path.endsWith('.svg')) {
     return false
   }
+  console.log(`::notice::Checking ${path}`)
   // Now load the file's contents from disk
   const originalFile = fs.readFileSync(path, 'utf8')
 
