@@ -116,7 +116,7 @@ const viewBoxAndDimensions: PluginConfig = {
   name: 'viewBoxAndDimensions',
   fn: () => ({
     element: {
-      exit(node) {
+      enter(node) {
         if (node.name !== 'svg') {
           return
         }
@@ -150,7 +150,7 @@ const addContextFill: PluginConfig = {
   name: 'addContextFill',
   fn: () => ({
     element: {
-      exit(node) {
+      enter(node) {
         if (node.name !== 'svg') {
           return
         }
