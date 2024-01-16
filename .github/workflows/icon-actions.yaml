@@ -11,8 +11,6 @@ jobs:
   checks:
     runs-on: "ubuntu-latest"
     name: "Check and format icons"
-    # Skip if commit message contains "format-skip"
-    if: "!contains(github.event.head_commit.message, 'format-skip')"
     permissions:
       contents: "write"
 
@@ -45,5 +43,3 @@ jobs:
       # Commit changes
       - name: Commit changes
         uses: ./.github/actions/dist/commit-changes
-        with:
-          message: "Updated icons to match format conventions"

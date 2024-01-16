@@ -1,4 +1,3 @@
-"use strict";
 var __create = Object.create;
 var __defProp = Object.defineProperty;
 var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -438,13 +437,13 @@ var init_utils = __esm({
 
 // node_modules/regexp-to-ast/lib/regexp-to-ast.js
 var require_regexp_to_ast = __commonJS({
-  "node_modules/regexp-to-ast/lib/regexp-to-ast.js"(exports2, module2) {
+  "node_modules/regexp-to-ast/lib/regexp-to-ast.js"(exports, module) {
     "use strict";
     (function(root, factory) {
       if (typeof define === "function" && define.amd) {
         define([], factory);
-      } else if (typeof module2 === "object" && module2.exports) {
-        module2.exports = factory();
+      } else if (typeof module === "object" && module.exports) {
+        module.exports = factory();
       } else {
         root.regexpToAst = factory();
       }
@@ -452,7 +451,7 @@ var require_regexp_to_ast = __commonJS({
       typeof self !== "undefined" ? (
         // istanbul ignore next
         self
-      ) : exports2,
+      ) : exports,
       function() {
         function RegExpParser2() {
         }
@@ -7942,7 +7941,7 @@ var init_api = __esm({
 
 // node_modules/@xml-tools/parser/lib/lexer.js
 var require_lexer = __commonJS({
-  "node_modules/@xml-tools/parser/lib/lexer.js"(exports2, module2) {
+  "node_modules/@xml-tools/parser/lib/lexer.js"(exports, module) {
     "use strict";
     var { createToken: createTokenOrg, Lexer: Lexer2 } = (init_api(), __toCommonJS(api_exports));
     var fragments = {};
@@ -8104,7 +8103,7 @@ var require_lexer = __commonJS({
       lineTerminatorCharacters: ["\n"],
       lineTerminatorsPattern: /\n|\r\n/g
     });
-    module2.exports = {
+    module.exports = {
       xmlLexer,
       tokensDictionary
     };
@@ -8113,7 +8112,7 @@ var require_lexer = __commonJS({
 
 // node_modules/@xml-tools/parser/lib/parser.js
 var require_parser = __commonJS({
-  "node_modules/@xml-tools/parser/lib/parser.js"(exports2, module2) {
+  "node_modules/@xml-tools/parser/lib/parser.js"(exports, module) {
     "use strict";
     var { CstParser: CstParser2, tokenMatcher: tokenMatcher2 } = (init_api(), __toCommonJS(api_exports));
     var { tokensDictionary: t } = require_lexer();
@@ -8276,7 +8275,7 @@ var require_parser = __commonJS({
       }
     };
     var xmlParser = new Parser3();
-    module2.exports = {
+    module.exports = {
       xmlParser
     };
   }
@@ -8284,11 +8283,11 @@ var require_parser = __commonJS({
 
 // node_modules/@xml-tools/parser/lib/api.js
 var require_api = __commonJS({
-  "node_modules/@xml-tools/parser/lib/api.js"(exports2, module2) {
+  "node_modules/@xml-tools/parser/lib/api.js"(exports, module) {
     "use strict";
     var { xmlLexer } = require_lexer();
     var { xmlParser } = require_parser();
-    module2.exports = {
+    module.exports = {
       parse: function parse(text) {
         const lexResult = xmlLexer.tokenize(text);
         xmlParser.input = lexResult.tokens;
@@ -8305,13 +8304,10 @@ var require_api = __commonJS({
   }
 });
 
-// src/utils.ts
-var import_os2 = require("os");
-
 // src/summary.ts
-var import_os = require("os");
-var import_fs = require("fs");
-var { access, appendFile, writeFile } = import_fs.promises;
+import { EOL } from "os";
+import { constants, promises } from "fs";
+var { access, appendFile, writeFile } = promises;
 var SUMMARY_ENV_VAR = "GITHUB_STEP_SUMMARY";
 var Summary = class {
   constructor() {
@@ -8333,7 +8329,7 @@ var Summary = class {
       return this._filePath;
     }
     try {
-      await access(pathFromEnv, import_fs.constants.R_OK | import_fs.constants.W_OK);
+      await access(pathFromEnv, constants.R_OK | constants.W_OK);
     } catch {
       throw new Error(
         `Unable to access summary file: '${pathFromEnv}'. Check if the file has correct read/write permissions.`
@@ -8370,7 +8366,7 @@ var Summary = class {
     const filePath = await this.filePath();
     if (!filePath) {
       console.log(
-        `~~~ SUMMARY ~~~${import_os.EOL}${this._buffer}${import_os.EOL}~~~ END SUMMARY ~~~`
+        `~~~ SUMMARY ~~~${EOL}${this._buffer}${EOL}~~~ END SUMMARY ~~~`
       );
       return this.emptyBuffer();
     }
@@ -8429,7 +8425,7 @@ var Summary = class {
    * @returns {Summary} summary instance
    */
   addEOL() {
-    return this.addRaw(import_os.EOL);
+    return this.addRaw(EOL);
   }
   /**
    * Adds an HTML codeblock to the summary buffer
@@ -8584,8 +8580,8 @@ var Summary = class {
    * @returns {Summary} summary instance
    */
   addAlert(type, text) {
-    const element = text.split(import_os.EOL).map((line3) => `> ${line3}`).join(import_os.EOL);
-    const alert = `> [!${type.toUpperCase()}]${import_os.EOL}${element}`;
+    const element = text.split(EOL).map((line3) => `> ${line3}`).join(EOL);
+    const alert = `> [!${type.toUpperCase()}]${EOL}${element}`;
     return this.addRaw(alert).addEOL();
   }
 };
@@ -8593,7 +8589,8 @@ var _summary = new Summary();
 var summary = _summary;
 
 // src/utils.ts
-var import_prettier = __toESM(require("prettier"), 1);
+import { EOL as EOL2 } from "os";
+import prettier from "prettier";
 
 // node_modules/@prettier/plugin-xml/src/languages.js
 var languages_default = [
@@ -8936,10 +8933,10 @@ var parser = {
 var parser_default = parser;
 
 // node_modules/@prettier/plugin-xml/src/printer.js
-var doc2 = __toESM(require("prettier/doc"), 1);
+import * as doc2 from "prettier/doc";
 
 // node_modules/@prettier/plugin-xml/src/embed.js
-var doc = __toESM(require("prettier/doc"), 1);
+import * as doc from "prettier/doc";
 var {
   dedentToRoot,
   group,
@@ -9573,7 +9570,7 @@ var plugin = {
 var plugin_default = plugin;
 
 // src/utils.ts
-var XML_LICENSE = `<!-- This Source Code Form is subject to the terms of the Mozilla Public${import_os2.EOL}   - License, v. 2.0. If a copy of the MPL was not distributed with this${import_os2.EOL}   - file, You can obtain one at http://mozilla.org/MPL/2.0/. -->`;
+var XML_LICENSE = `<!-- This Source Code Form is subject to the terms of the Mozilla Public${EOL2}   - License, v. 2.0. If a copy of the MPL was not distributed with this${EOL2}   - file, You can obtain one at http://mozilla.org/MPL/2.0/. -->`;
 function getInput(name, required = true) {
   const val = getEnv(`INPUT_${name.replace(/ /g, "_").toUpperCase()}`);
   if (required && !val) {
@@ -9590,7 +9587,7 @@ function ensureLicense(input) {
     "g"
   );
   const output = input.replace(regex, "");
-  return `${XML_LICENSE}${import_os2.EOL}${output}`;
+  return `${XML_LICENSE}${EOL2}${output}`;
 }
 async function tryCatch(fn, errorSummary) {
   try {
@@ -9606,15 +9603,15 @@ async function formatFile(type, content) {
   if (!["svg", "xml"].includes(type)) {
     throw new Error(`Invalid type to format: ${type}`);
   }
-  const plugins = type === "svg" ? [] : [plugin_default];
-  const formatted = await import_prettier.default.format(content, {
-    parser: type === "svg" ? "html" : "xml",
-    plugins,
-    // use 4 spaces for indentation
+  const formatted = await prettier.format(content, {
+    parser: "xml",
+    plugins: [plugin_default],
     tabWidth: 4,
     printWidth: type === "svg" ? 1e5 : 80,
     singleAttributePerLine: false,
-    bracketSameLine: true
+    htmlWhitespaceSensitivity: "ignore",
+    bracketSameLine: true,
+    xmlWhitespaceSensitivity: "ignore"
   });
   return formatted;
 }
@@ -9623,6 +9620,7 @@ var svgoBasePlugins = [
   "removeStyleElement",
   "removeOffCanvasPaths",
   "removeNonInheritableGroupAttrs",
+  "sortAttrs",
   {
     name: "preset-default",
     params: {
@@ -9642,62 +9640,12 @@ function svgoRemoveAttrs(attrs) {
   };
 }
 
-// src/mobile-transform/index.ts
-var import_node_fs = __toESM(require("fs"), 1);
-var import_fast_glob = __toESM(require("fast-glob"), 1);
-var import_svgo = require("svgo");
-tryCatch(run, "Failed to check mobile files. See logs for details.");
-async function run() {
-  const filesGlob = getInput("files", true);
-  const fileType = getInput("file_type", true);
-  const files = await (0, import_fast_glob.default)(filesGlob);
-  const changedFiles = [];
-  for (const file of files) {
-    if (await checkSvg(file, fileType)) {
-      changedFiles.push(file);
-    }
-  }
-  if (changedFiles.length === 0) {
-    summary.addHeading(`:iphone: No ${fileType.toUpperCase()} files changed`, 3);
-    summary.addRaw(
-      `Checked ${files.length} ${fileType.toUpperCase()} files and made no changes.`
-    );
-    summary.write();
-    return;
-  }
-  summary.addHeading(
-    `:iphone: Updated ${changedFiles.length} mobile ${fileType.toUpperCase()} files`,
-    3
-  );
-  summary.addList(changedFiles);
-  summary.write();
-}
-async function checkSvg(path, type) {
-  if (!path.endsWith(`.${type}`)) {
-    return false;
-  }
-  const originalFile = import_node_fs.default.readFileSync(path, "utf8");
-  let formatted = originalFile;
-  if (type === "svg") {
-    formatted = (0, import_svgo.optimize)(originalFile, {
-      plugins: [
-        ...svgoBasePlugins,
-        svgoRemoveAttrs([
-          "id",
-          "data-name",
-          "class",
-          "stroke",
-          "stroke-width",
-          "stroke-miterlimit"
-        ])
-      ]
-    }).data;
-  }
-  formatted = await formatFile(type, originalFile);
-  const withLicense = ensureLicense(formatted);
-  const fileChanged = withLicense !== originalFile;
-  if (fileChanged) {
-    import_node_fs.default.writeFileSync(path, withLicense);
-  }
-  return fileChanged;
-}
+export {
+  summary,
+  getInput,
+  ensureLicense,
+  tryCatch,
+  formatFile,
+  svgoBasePlugins,
+  svgoRemoveAttrs
+};

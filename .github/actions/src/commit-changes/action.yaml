@@ -1,9 +1,5 @@
 name: 'Icon Transform'
 description: 'Modifies icons so they follow the same format'
-inputs:
-  message:
-    description: 'Commit message'
-    required: true
 runs:
   using: 'node20'
-  main: 'index.cjs'
+  main: 'index.js'

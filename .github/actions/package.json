@@ -7,7 +7,7 @@
     "build2": "rollup -c",
     "dev": "rollup -c -w",
     "copy": "copyfiles -u 1 -e \"**/*.ts\" \"src/**/*\" dist",
-    "build": "tsup --clean --format cjs src/**/*.ts && npm run copy",
+    "build": "tsup --clean --format esm src/**/*.ts && npm run copy",
     "lint": "eslint -c .eslintrc.cjs src/",
     "prettier": "prettier -c .prettierrc.cjs --write --check 'src/**/*.*'"
   },
