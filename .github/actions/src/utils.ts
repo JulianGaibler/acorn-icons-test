@@ -1,5 +1,5 @@
 import { EOL } from 'os'
-import { summary } from './summary'
+import { summary } from './summary.js'
 import prettier from 'prettier'
 import prettierXmlPlugin from '@prettier/plugin-xml'
 import { Config, PluginConfig } from 'svgo'

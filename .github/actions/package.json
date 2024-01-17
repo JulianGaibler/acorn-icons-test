@@ -2,12 +2,10 @@
   "name": "actions",
   "version": "1.0.0",
   "type": "module",
-  "description": "A collection of actions for Acorn icons",
+  "description": "A collection of actions for the acorn icon repository",
   "scripts": {
-    "build2": "rollup -c",
-    "dev": "rollup -c -w",
     "copy": "copyfiles -u 1 -e \"**/*.ts\" \"src/**/*\" dist",
-    "build": "tsup --clean --format esm src/**/*.ts && npm run copy",
+    "build": "tsc && npm run copy",
     "lint": "eslint -c .eslintrc.cjs src/",
     "prettier": "prettier -c .prettierrc.cjs --write --check 'src/**/*.*'"
   },
@@ -25,7 +23,6 @@
     "copyfiles": "^2.4.1",
     "eslint": "^8.54.0",
     "eslint-config-prettier": "^9.0.0",
-    "tslib": "^2.6.2",
-    "tsup": "^8.0.1"
+    "typescript": "5.3.3"
   }
 }

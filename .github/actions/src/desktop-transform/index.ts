@@ -1,7 +1,7 @@
 import { PluginConfig, optimize } from 'svgo'
 import fg from 'fast-glob'
 import fs from 'fs'
-import { summary } from '../summary'
+import { summary } from '../summary.js'
 import {
   ensureLicense,
   formatFile,
@@ -9,7 +9,7 @@ import {
   svgoBasePlugins,
   svgoRemoveAttrs,
   tryCatch,
-} from '../utils'
+} from '../utils.js'
 
 tryCatch(run, 'Failed to check desktop SVGs. See logs for details.')
 
@@ -66,7 +66,7 @@ async function updateDesktopIcon(path: string): Promise<boolean> {
   if (!path.endsWith('.svg')) {
     return false
   }
-  console.log(`::notice::Checking ${path}`)
+  console.log(`Checking ${path}`)
   // Now load the file's contents from disk
   const originalFile = fs.readFileSync(path, 'utf8')
 

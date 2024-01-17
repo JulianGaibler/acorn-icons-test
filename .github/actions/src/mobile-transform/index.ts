@@ -1,7 +1,7 @@
 import fs from 'node:fs'
 import fg from 'fast-glob'
 import { optimize } from 'svgo'
-import { summary } from '../summary'
+import { summary } from '../summary.js'
 import {
   FormattableFile,
   ensureLicense,
@@ -10,7 +10,7 @@ import {
   svgoBasePlugins,
   svgoRemoveAttrs,
   tryCatch,
-} from '../utils'
+} from '../utils.js'
 
 tryCatch(run, 'Failed to check mobile files. See logs for details.')
 
@@ -74,7 +74,7 @@ async function updateMobileIcon(
   if (!path.endsWith(`.${type}`)) {
     return false
   }
-  console.log(`::notice::Checking ${path}`)
+  console.log(`Checking ${path}`)
   // Now load the file's contents from disk
   const originalFile = fs.readFileSync(path, 'utf8')
 

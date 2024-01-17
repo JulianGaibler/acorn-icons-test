@@ -1,8 +1,8 @@
 import { promises } from 'fs'
 import { execSync } from 'child_process'
 import { simpleGit } from 'simple-git'
-import { summary } from '../summary'
-import { tryCatch } from '../utils'
+import { summary } from '../summary.js'
+import { tryCatch } from '../utils.js'
 
 const { writeFile } = promises
 const COMMIT_MESSAGE = 'Updated icons to match format conventions'

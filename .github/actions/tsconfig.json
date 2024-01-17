@@ -1,12 +1,21 @@
 {
   "include": ["src/**/*", "src/index.d.ts"],
   "compilerOptions": {
-    "target": "es2019",
-    "verbatimModuleSyntax": false,
-    "allowSyntheticDefaultImports": true,
+    "target": "es2022",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "rootDir": "./src",
+    "isolatedModules": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
     "strict": true,
-    "moduleResolution": "Bundler",
-    "module": "es2015",
-    "types": ["node"]
+    "skipLibCheck": true,
+    "outDir": "./dist",
+    "removeComments": true,
+    "resolveJsonModule": true,
+    "baseUrl": "./src",
+    "paths": {
+      "@src/*": ["*"]
+    }
   }
 }
